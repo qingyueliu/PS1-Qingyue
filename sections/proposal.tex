@@ -1,50 +1,46 @@
 \section{Three connected research questions}
-Start from Intellectual Statement II. State the background, motivation, application, affected stakeholders, and strategic tension. Explain your proposal's relationship to a Nobel-recognized foundation and current research.
+Minimal third-party observation can help learning agents find cooperative partners~\cite{leung2026}, but a strategic observer may send false, incomplete, or unverifiable reports. In my application, C observes B's previous action, reports it to A, and A decides whether to use the report before playing B. Marketplaces, AI-agent platforms, and public allocation systems face the same tension. Figure~\ref{fig:teaser} connects three questions:
 
-\textbf{Q1---Economics:} [Which incentive, welfare, allocation, or institutional question needs an answer?]\par
-\textbf{Q2---Computation:} [Which model, algorithm, or evaluation makes the answer checkable?]\par
-\textbf{Q3---Behavior:} [Which belief, preference, reasoning limit, or learning mechanism could alter the prediction?]
+\textbf{Q1---Economics:} Which rewards, lying costs, or verification rules make C's report credible and welfare improving?\par
+\textbf{Q2---Computation:} Can Q-learners identify useful reports and sustain cooperation across information conditions?\par
+\textbf{Q3---Behavior:} Does report use reflect calibrated trust, or ambiguity and short-run optimism?
 
-Explain why the answers depend on one another. Cite relevant economics, computer-science, and behavioral-science papers. Refer to Figure~\ref{fig:teaser} and explain how its mechanism connects your questions.
+Together they ask when institutions can turn third-party information into calibrated trust without creating a new channel for manipulation.
 
 \section{Answer to Q1: incentives and intellectual lineage}
-State a provisional answer or falsifiable hypothesis. Define players, actions versus strategies, payoffs, timing, and information. Name the solution concept and cite its defining paper, such as Nash~\cite{nash1950} or Bayesian equilibrium~\cite{harsanyi1968}. State what the benchmark establishes and what it leaves unresolved. Distinguish hypothetical, observed, estimated, and inherited quantities.
+After round 1, C observes B's action $s\in\{C,D\}$ in a preceding C--B exposure stage and sends $m\in\{C,D\}$; A uses or ignores $m$, then A and B simultaneously cooperate or defect. A/B payoffs are $(3,3),(0,4),(4,0),(1,1)$; C gets $h=0.4$ for truth and pays $\ell=0.2$ for lying. Truth strictly benefits C, but defection improves A's or B's payoff by one against either opposing action. A Bayesian-Nash benchmark~\cite{harsanyi1968} can therefore combine truthful reporting with mutual defection. This matches strategic-communication theory: informativeness depends on aligned incentives, not message availability alone~\cite{crawford1982}.
+
+\textbf{Hypothesis.} Increasing $\ell$ raises honesty but not cooperation. Verification helps only if information changes a consequential margin such as partner selection, future access, or sanctions. The welfare benchmark is A+B payoff, separating credible reporting from socially useful reporting.
 
 \section{Answer to Q2: method and evaluation}
-Explain the computational part of Figure~\ref{fig:teaser}: inputs, algorithm, baseline, metric, and a meaningful mathematical or computational check. Specify your smallest feasible experiment and one modification to the baseline. State the actual outputs obtained; label every untested outcome as expected or planned. Your Colab notebook and interactive game must explain the same research question and identify any differences in model or scope.
+The browser baseline uses tabular Q-learning~\cite{watkins1992}: $\epsilon=0.12$, action $\alpha=0.12$, $\gamma=0.85$, with reporter $\alpha_C=0.15$, $\gamma_C=0.80$. Recorded unseeded simulations produced 85.0\%, 3.8\%, and 0.7\% mutual cooperation over 100, 10,000, and 100,000 rounds; honesty stayed near 94\%, while welfare fell from 5.68 to 2.46 and 2.27.
+
+Across 30 fixed seeds and 10,000 rounds, cooperation is 3.29\% without reports and below 3\% in every reporting treatment; strategic honesty is 93.98\%. Exact means and dispersion appear in Appendix A. With truth dominant, $\epsilon$-exploration explains residual lies. Outputs are synthetic; next I add partner choice.
 
 \clearpage\balance
 \section{Answer to Q3: behavior and competing explanations}
-Identify a behavioral mechanism and a competing explanation. Describe evidence that would discriminate between them. Explain how this changes the economic model or computational design. State the limits of what the planned evidence can identify. Synthetic or simulated results do not establish human or real AI behavior. Include a feasible next test and what finding would change your mind.
-
+Calibrated trust predicts that A uses reports that forecast realized behavior, consistent with evidence that gossip changes cooperation~\cite{sommerfeld2007}. A competing payoff-learning account predicts defection regardless of accuracy because defection dominates. If verification raises report use but not cooperation, while partner selection raises both, payoff learning is better supported. If accurate reports alone raise cooperation, trust has an independent role. Q-values are behavioral indicators, not felt trust, guilt, or belief. I would revise my claim if cooperation remained high in long seeded runs without consequences for reported information.
 
 \section{Advanced development and future directions}
-Build on a named Nobel laureate's defining work and cite the award record. Identify an enduring human question---such as cooperation, fairness, trust or collective choice---and explain what the foundation establishes. Add a relevant Turing Award foundation where it clarifies the computational lineage.
+Nash, Harsanyi, and Selten received the 1994 economics prize for equilibrium analysis~\cite{nobel1994}; Harsanyi clarifies choice under unknown reliability. Sutton and Barto received the 2024 Turing Award for reinforcement learning~\cite{turing2024}. Today's boundary is that autonomous agents learn from other strategic agents' reports at machine speed. Integrating equilibrium incentives, learning dynamics, and behavioral trust explains why transparent information can remain ineffective.
 
-Explain what is distinctive about today's environment and technology, what current research leaves unresolved, and how your proposal advances that boundary. State the economic, computational and behavioral contributions and the new insight their integration makes possible.
-
-\begin{table}[h]\caption{From laureate foundations to a new interdisciplinary contribution.}
-\begin{tabularx}{\columnwidth}{@{}p{1.6cm}Y@{}}\toprule
+\begin{table}[h]\caption{Roadmap from laureate foundations to contribution.}
+\begin{tabularx}{\columnwidth}{@{}p{1.35cm}Y@{}}\toprule
 \textbf{Horizon}&\textbf{Milestone and evidence}\\\midrule
-Foundation&[Laureate, defining work, enduring question and retained insight.]\\
-PS1&[Current-era setting, working baseline and meaningful check.]\\
-Next study&[New interdisciplinary explanation or design; a discriminating test.]\\
-Longer term&[Broader validation, benefits and reusable knowledge or tools.]\\
-2056&[Integrated contribution and evidence connecting it to the ambition below.]\\\bottomrule
+Foundation&Equilibrium analysis and reinforcement learning.\\
+PS1&Three-agent model, demo, seeded condition check.\\
+Next&Add verification with partner selection.\\
+Longer term&Validate with heterogeneous agents and people.\\
+2056&Auditable allocation using calibrated information.\\\bottomrule
 \end{tabularx}\end{table}
 
 \noindent\textbf{Expected 2056 Nobel Prize and Turing Award contribution statement.}
-By 2056, I aspire to be recognized for [theory, method or design] addressing [enduring human question] in [the current era's distinctive environment]. Building on [laureates and cited foundations], I will integrate [economics], [computer science] and [behavioral science] to advance [specific boundary]. Progress will be demonstrated by [milestones and evidence], with intellectual merits in [knowledge] and practical impacts for [people and institutions].
+By 2056, I aspire to develop auditable resource-allocation institutions that sustain cooperation when people, governments, and AI agents rely on strategic third-party information. Building on equilibrium analysis and reinforcement learning, I will integrate incentive design, reproducible multi-agent evaluation, and behavioral evidence to separate honesty, accuracy, verifiability, and social usefulness.
 
 \subsection*{Open Science Statement}
-\textbf{GitHub:} \GitHubLink\\
-\textbf{Google Colab:} \ColabLink\par
-[Identify available code, data or synthetic inputs, notebook, dependencies, outputs, release/commit and actual reuse terms. Give the shortest reproducible run instruction.]
+\textbf{GitHub:} \GitHubLink\quad \textbf{Colab:} \ColabLink\par
+The repository releases the LaTeX source, editable figure, standard-library model, notebook, saved synthetic outputs, tests, and browser game. Run \texttt{python companion/src/strategic\_reporting.py}. Submitted commit: \textbf{[ADD COMMIT]}. Student code uses the MIT License; other materials retain their terms.
 
 \subsection*{Statement of Contribution to the UN's SDGs}
-\textbf{Hugging Face:} \DemoLink\\
-Through an open-access [tool], this project aims to support \textbf{SDG 4---Quality Education}~\cite{sdg4} by helping [audience] learn [concept] through [interaction]. [State access needs, learning instructions and a feasible evaluation.] Distinguish the resource released from benefits that remain to be evaluated.
-
-\subsection*{Submission milestones}
-First draft: September 13, 2026, 11:00 P.M. Beijing time (UTC+8). Class review: September 14. Proposed: rebuttal September 16 and revised submission September 20, both at 11:00 P.M. Update Appendix~\ref{app:abstract} with each reflection and revision.
-
+\textbf{Hugging Face:} \DemoLink\par
+The open-access game supports \textbf{SDG 4---Quality Education}~\cite{sdg4}: students vary information and incentives, compare outcomes, or play as A to learn why honesty and cooperation differ. A pre/post explanation question can measure the intended learning outcome; improvement has not yet been evaluated.

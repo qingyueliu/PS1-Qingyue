@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <mxfile host="app.diagrams.net" type="device">
-  <diagram name="Class proposal research design" id="class-tqre-teaser">
+  <diagram name="Strategic reporting research design" id="strategic-reporting-teaser">
     <mxGraphModel page="1" pageWidth="960" pageHeight="286" grid="1" gridSize="10">
       <root>
         <mxCell id="0" />
@@ -8,19 +8,19 @@
         <mxCell id="title0" value="Economics" vertex="1" parent="1" style="text;html=0;whiteSpace=wrap;fontFamily=DejaVu Sans;fontSize=20;fontColor=#18324A;fontStyle=1;align=center;verticalAlign=middle;fillColor=none;strokeColor=none;">
           <mxGeometry as="geometry" x="0" y="0" width="300" height="25" />
         </mxCell>
-        <mxCell id="cite0" value="Rogers et al. (2009)" vertex="1" parent="1" style="text;html=0;whiteSpace=wrap;fontFamily=DejaVu Sans;fontSize=17;fontColor=#18324A;fontStyle=0;align=center;verticalAlign=middle;fillColor=none;strokeColor=none;">
+        <mxCell id="cite0" value="Harsanyi (1968); Crawford &amp; Sobel (1982)" vertex="1" parent="1" style="text;html=0;whiteSpace=wrap;fontFamily=DejaVu Sans;fontSize=14;fontColor=#18324A;fontStyle=0;align=center;verticalAlign=middle;fillColor=none;strokeColor=none;">
           <mxGeometry as="geometry" x="0" y="28" width="300" height="23" />
         </mxCell>
         <mxCell id="title330" value="Computer science" vertex="1" parent="1" style="text;html=0;whiteSpace=wrap;fontFamily=DejaVu Sans;fontSize=20;fontColor=#18324A;fontStyle=1;align=center;verticalAlign=middle;fillColor=none;strokeColor=none;">
           <mxGeometry as="geometry" x="330" y="0" width="300" height="25" />
         </mxCell>
-        <mxCell id="cite330" value="Zhang et al. (2025)" vertex="1" parent="1" style="text;html=0;whiteSpace=wrap;fontFamily=DejaVu Sans;fontSize=17;fontColor=#18324A;fontStyle=0;align=center;verticalAlign=middle;fillColor=none;strokeColor=none;">
+        <mxCell id="cite330" value="Watkins &amp; Dayan (1992); Leung et al. (2026)" vertex="1" parent="1" style="text;html=0;whiteSpace=wrap;fontFamily=DejaVu Sans;fontSize=14;fontColor=#18324A;fontStyle=0;align=center;verticalAlign=middle;fillColor=none;strokeColor=none;">
           <mxGeometry as="geometry" x="330" y="28" width="300" height="23" />
         </mxCell>
         <mxCell id="title660" value="Behavioral science" vertex="1" parent="1" style="text;html=0;whiteSpace=wrap;fontFamily=DejaVu Sans;fontSize=20;fontColor=#18324A;fontStyle=1;align=center;verticalAlign=middle;fillColor=none;strokeColor=none;">
           <mxGeometry as="geometry" x="660" y="0" width="300" height="25" />
         </mxCell>
-        <mxCell id="cite660" value="Camerer (2004); Gupta (2024)" vertex="1" parent="1" style="text;html=0;whiteSpace=wrap;fontFamily=DejaVu Sans;fontSize=17;fontColor=#18324A;fontStyle=0;align=center;verticalAlign=middle;fillColor=none;strokeColor=none;">
+        <mxCell id="cite660" value="Sommerfeld et al. (2007)" vertex="1" parent="1" style="text;html=0;whiteSpace=wrap;fontFamily=DejaVu Sans;fontSize=15;fontColor=#18324A;fontStyle=0;align=center;verticalAlign=middle;fillColor=none;strokeColor=none;">
           <mxGeometry as="geometry" x="660" y="28" width="300" height="23" />
         </mxCell>
         <mxCell id="matrix" value="" vertex="1" parent="1" style="rect;html=0;whiteSpace=wrap;fontFamily=DejaVu Sans;fontSize=18;fontColor=#315EFB;fontStyle=0;align=center;verticalAlign=middle;fillColor=none;strokeColor=#315EFB;strokeWidth=1.6;">
@@ -40,22 +40,22 @@
             <Array as="points" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="payoff0" value="a, b" vertex="1" parent="1" style="text;html=0;whiteSpace=wrap;fontFamily=DejaVu Sans;fontSize=18;fontColor=#18324A;fontStyle=0;align=center;verticalAlign=middle;fillColor=none;strokeColor=none;">
+        <mxCell id="payoff0" value="3, 3" vertex="1" parent="1" style="text;html=0;whiteSpace=wrap;fontFamily=DejaVu Sans;fontSize=18;fontColor=#18324A;fontStyle=0;align=center;verticalAlign=middle;fillColor=none;strokeColor=none;">
           <mxGeometry as="geometry" x="66" y="64" width="85" height="26" />
         </mxCell>
-        <mxCell id="payoff1" value="c, d" vertex="1" parent="1" style="text;html=0;whiteSpace=wrap;fontFamily=DejaVu Sans;fontSize=18;fontColor=#18324A;fontStyle=0;align=center;verticalAlign=middle;fillColor=none;strokeColor=none;">
+        <mxCell id="payoff1" value="0, 4" vertex="1" parent="1" style="text;html=0;whiteSpace=wrap;fontFamily=DejaVu Sans;fontSize=18;fontColor=#18324A;fontStyle=0;align=center;verticalAlign=middle;fillColor=none;strokeColor=none;">
           <mxGeometry as="geometry" x="151" y="64" width="85" height="26" />
         </mxCell>
-        <mxCell id="payoff2" value="e, f" vertex="1" parent="1" style="text;html=0;whiteSpace=wrap;fontFamily=DejaVu Sans;fontSize=18;fontColor=#18324A;fontStyle=0;align=center;verticalAlign=middle;fillColor=none;strokeColor=none;">
+        <mxCell id="payoff2" value="4, 0" vertex="1" parent="1" style="text;html=0;whiteSpace=wrap;fontFamily=DejaVu Sans;fontSize=18;fontColor=#18324A;fontStyle=0;align=center;verticalAlign=middle;fillColor=none;strokeColor=none;">
           <mxGeometry as="geometry" x="66" y="93" width="85" height="26" />
         </mxCell>
-        <mxCell id="payoff3" value="g, h" vertex="1" parent="1" style="text;html=0;whiteSpace=wrap;fontFamily=DejaVu Sans;fontSize=18;fontColor=#18324A;fontStyle=0;align=center;verticalAlign=middle;fillColor=none;strokeColor=none;">
+        <mxCell id="payoff3" value="1, 1" vertex="1" parent="1" style="text;html=0;whiteSpace=wrap;fontFamily=DejaVu Sans;fontSize=18;fontColor=#18324A;fontStyle=0;align=center;verticalAlign=middle;fillColor=none;strokeColor=none;">
           <mxGeometry as="geometry" x="151" y="93" width="85" height="26" />
         </mxCell>
         <mxCell id="belief0" value="" vertex="1" parent="1" style="rect;html=0;whiteSpace=wrap;fontFamily=DejaVu Sans;fontSize=18;fontColor=#315EFB;fontStyle=0;align=center;verticalAlign=middle;fillColor=none;strokeColor=#315EFB;strokeWidth=1.6;">
           <mxGeometry as="geometry" x="347" y="65" width="70" height="53" />
         </mxCell>
-        <mxCell id="belief-label0" value="k = 0" vertex="1" parent="1" style="text;html=0;whiteSpace=wrap;fontFamily=DejaVu Sans;fontSize=17;fontColor=#18324A;fontStyle=0;align=center;verticalAlign=middle;fillColor=none;strokeColor=none;">
+        <mxCell id="belief-label0" value="None" vertex="1" parent="1" style="text;html=0;whiteSpace=wrap;fontFamily=DejaVu Sans;fontSize=17;fontColor=#18324A;fontStyle=0;align=center;verticalAlign=middle;fillColor=none;strokeColor=none;">
           <mxGeometry as="geometry" x="347" y="76" width="70" height="26" />
         </mxCell>
         <mxCell id="recursive0" edge="1" parent="1" style="edgeStyle=none;strokeColor=#315EFB;strokeWidth=1.6;endArrow=block;endFill=1;dashed=0;">
@@ -68,7 +68,7 @@
         <mxCell id="belief1" value="" vertex="1" parent="1" style="rect;html=0;whiteSpace=wrap;fontFamily=DejaVu Sans;fontSize=18;fontColor=#315EFB;fontStyle=0;align=center;verticalAlign=middle;fillColor=none;strokeColor=#315EFB;strokeWidth=1.6;">
           <mxGeometry as="geometry" x="435" y="65" width="70" height="53" />
         </mxCell>
-        <mxCell id="belief-label1" value="k = 1" vertex="1" parent="1" style="text;html=0;whiteSpace=wrap;fontFamily=DejaVu Sans;fontSize=17;fontColor=#18324A;fontStyle=0;align=center;verticalAlign=middle;fillColor=none;strokeColor=none;">
+        <mxCell id="belief-label1" value="Report" vertex="1" parent="1" style="text;html=0;whiteSpace=wrap;fontFamily=DejaVu Sans;fontSize=17;fontColor=#18324A;fontStyle=0;align=center;verticalAlign=middle;fillColor=none;strokeColor=none;">
           <mxGeometry as="geometry" x="435" y="76" width="70" height="26" />
         </mxCell>
         <mxCell id="recursive1" edge="1" parent="1" style="edgeStyle=none;strokeColor=#315EFB;strokeWidth=1.6;endArrow=block;endFill=1;dashed=0;">
@@ -81,7 +81,7 @@
         <mxCell id="belief2" value="" vertex="1" parent="1" style="rect;html=0;whiteSpace=wrap;fontFamily=DejaVu Sans;fontSize=18;fontColor=#315EFB;fontStyle=0;align=center;verticalAlign=middle;fillColor=none;strokeColor=#315EFB;strokeWidth=1.6;">
           <mxGeometry as="geometry" x="523" y="65" width="70" height="53" />
         </mxCell>
-        <mxCell id="belief-label2" value="k = 2" vertex="1" parent="1" style="text;html=0;whiteSpace=wrap;fontFamily=DejaVu Sans;fontSize=17;fontColor=#18324A;fontStyle=0;align=center;verticalAlign=middle;fillColor=none;strokeColor=none;">
+        <mxCell id="belief-label2" value="Verify" vertex="1" parent="1" style="text;html=0;whiteSpace=wrap;fontFamily=DejaVu Sans;fontSize=17;fontColor=#18324A;fontStyle=0;align=center;verticalAlign=middle;fillColor=none;strokeColor=none;">
           <mxGeometry as="geometry" x="523" y="76" width="70" height="26" />
         </mxCell>
         <mxCell id="head718" value="" vertex="1" parent="1" style="ellipse;html=0;whiteSpace=wrap;fontFamily=DejaVu Sans;fontSize=18;fontColor=#14877D;fontStyle=0;align=center;verticalAlign=middle;fillColor=none;strokeColor=#14877D;strokeWidth=1.6;">
@@ -119,22 +119,22 @@
             <Array as="points" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="mechanism0" value="Noisy strategic choice" vertex="1" parent="1" style="text;html=0;whiteSpace=wrap;fontFamily=DejaVu Sans;fontSize=18;fontColor=#18324A;fontStyle=0;align=center;verticalAlign=middle;fillColor=none;strokeColor=none;">
+        <mxCell id="mechanism0" value="Truthful reporting + defection" vertex="1" parent="1" style="text;html=0;whiteSpace=wrap;fontFamily=DejaVu Sans;fontSize=17;fontColor=#18324A;fontStyle=0;align=center;verticalAlign=middle;fillColor=none;strokeColor=none;">
           <mxGeometry as="geometry" x="0" y="133" width="300" height="24" />
         </mxCell>
-        <mxCell id="advance0" value="Extend to LLM decisions" vertex="1" parent="1" style="text;html=0;whiteSpace=wrap;fontFamily=DejaVu Sans;fontSize=17;fontColor=#14877D;fontStyle=0;align=center;verticalAlign=middle;fillColor=none;strokeColor=none;">
+        <mxCell id="advance0" value="Vary rewards, costs, and sanctions" vertex="1" parent="1" style="text;html=0;whiteSpace=wrap;fontFamily=DejaVu Sans;fontSize=15;fontColor=#14877D;fontStyle=0;align=center;verticalAlign=middle;fillColor=none;strokeColor=none;">
           <mxGeometry as="geometry" x="0" y="160" width="300" height="24" />
         </mxCell>
-        <mxCell id="mechanism330" value="Recursive opponent beliefs" vertex="1" parent="1" style="text;html=0;whiteSpace=wrap;fontFamily=DejaVu Sans;fontSize=18;fontColor=#18324A;fontStyle=0;align=center;verticalAlign=middle;fillColor=none;strokeColor=none;">
+        <mxCell id="mechanism330" value="Epsilon-greedy Q-learning" vertex="1" parent="1" style="text;html=0;whiteSpace=wrap;fontFamily=DejaVu Sans;fontSize=18;fontColor=#18324A;fontStyle=0;align=center;verticalAlign=middle;fillColor=none;strokeColor=none;">
           <mxGeometry as="geometry" x="330" y="133" width="300" height="24" />
         </mxCell>
-        <mxCell id="advance330" value="Estimate depth and precision" vertex="1" parent="1" style="text;html=0;whiteSpace=wrap;fontFamily=DejaVu Sans;fontSize=17;fontColor=#14877D;fontStyle=0;align=center;verticalAlign=middle;fillColor=none;strokeColor=none;">
+        <mxCell id="advance330" value="No report / strategic / verified" vertex="1" parent="1" style="text;html=0;whiteSpace=wrap;fontFamily=DejaVu Sans;fontSize=15;fontColor=#14877D;fontStyle=0;align=center;verticalAlign=middle;fillColor=none;strokeColor=none;">
           <mxGeometry as="geometry" x="330" y="160" width="300" height="24" />
         </mxCell>
-        <mxCell id="mechanism660" value="Human limits and persona cues" vertex="1" parent="1" style="text;html=0;whiteSpace=wrap;fontFamily=DejaVu Sans;fontSize=18;fontColor=#18324A;fontStyle=0;align=center;verticalAlign=middle;fillColor=none;strokeColor=none;">
+        <mxCell id="mechanism660" value="Calibrated trust vs payoff learning" vertex="1" parent="1" style="text;html=0;whiteSpace=wrap;fontFamily=DejaVu Sans;fontSize=16;fontColor=#18324A;fontStyle=0;align=center;verticalAlign=middle;fillColor=none;strokeColor=none;">
           <mxGeometry as="geometry" x="660" y="133" width="300" height="24" />
         </mxCell>
-        <mxCell id="advance660" value="Test within strategic games" vertex="1" parent="1" style="text;html=0;whiteSpace=wrap;fontFamily=DejaVu Sans;fontSize=17;fontColor=#14877D;fontStyle=0;align=center;verticalAlign=middle;fillColor=none;strokeColor=none;">
+        <mxCell id="advance660" value="Compare report use and cooperation" vertex="1" parent="1" style="text;html=0;whiteSpace=wrap;fontFamily=DejaVu Sans;fontSize=15;fontColor=#14877D;fontStyle=0;align=center;verticalAlign=middle;fillColor=none;strokeColor=none;">
           <mxGeometry as="geometry" x="660" y="160" width="300" height="24" />
         </mxCell>
         <mxCell id="synthesis0" edge="1" parent="1" style="edgeStyle=none;strokeColor=#14877D;strokeWidth=1.6;endArrow=block;endFill=1;dashed=1;">
@@ -161,13 +161,13 @@
         <mxCell id="evaluation" value="" vertex="1" parent="1" style="rect;html=0;whiteSpace=wrap;fontFamily=DejaVu Sans;fontSize=18;fontColor=#14877D;fontStyle=0;align=center;verticalAlign=middle;fillColor=none;strokeColor=#14877D;strokeWidth=1.6;">
           <mxGeometry as="geometry" x="55" y="207" width="850" height="53" />
         </mxCell>
-        <mxCell id="evaluation-title" value="Planned TQRE evaluation of LLM strategic reasoning" vertex="1" parent="1" style="text;html=0;whiteSpace=wrap;fontFamily=DejaVu Sans;fontSize=20;fontColor=#18324A;fontStyle=1;align=center;verticalAlign=middle;fillColor=none;strokeColor=none;">
+        <mxCell id="evaluation-title" value="When does third-party information sustain cooperation?" vertex="1" parent="1" style="text;html=0;whiteSpace=wrap;fontFamily=DejaVu Sans;fontSize=20;fontColor=#18324A;fontStyle=1;align=center;verticalAlign=middle;fillColor=none;strokeColor=none;">
           <mxGeometry as="geometry" x="70" y="208" width="820" height="25" />
         </mxCell>
-        <mxCell id="evaluation-output" value="Depth and precision estimates · Prompt and demographic sensitivity" vertex="1" parent="1" style="text;html=0;whiteSpace=wrap;fontFamily=DejaVu Sans;fontSize=17;fontColor=#18324A;fontStyle=0;align=center;verticalAlign=middle;fillColor=none;strokeColor=none;">
+        <mxCell id="evaluation-output" value="Honesty · report use · cooperation · exploitation · welfare" vertex="1" parent="1" style="text;html=0;whiteSpace=wrap;fontFamily=DejaVu Sans;fontSize=17;fontColor=#18324A;fontStyle=0;align=center;verticalAlign=middle;fillColor=none;strokeColor=none;">
           <mxGeometry as="geometry" x="70" y="234" width="820" height="24" />
         </mxCell>
-        <mxCell id="legend" value="Dashed arrows = proposed synthesis of the cited foundations; estimates are model-dependent." vertex="1" parent="1" style="text;html=0;whiteSpace=wrap;fontFamily=DejaVu Sans;fontSize=15;fontColor=#18324A;fontStyle=0;align=center;verticalAlign=middle;fillColor=none;strokeColor=none;">
+        <mxCell id="legend" value="Dashed arrows = interdisciplinary test; all reported outcomes are simulated." vertex="1" parent="1" style="text;html=0;whiteSpace=wrap;fontFamily=DejaVu Sans;fontSize=15;fontColor=#18324A;fontStyle=0;align=center;verticalAlign=middle;fillColor=none;strokeColor=none;">
           <mxGeometry as="geometry" x="0" y="266" width="960" height="20" />
         </mxCell>
       </root>

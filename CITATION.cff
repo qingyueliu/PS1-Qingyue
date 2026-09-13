@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "Please cite the paper and acknowledge the course template when reusing this PS1 project."
+title: "When Honest Reports Fail to Sustain Cooperation"
+authors:
+  - family-names: Liu
+    given-names: Qingyue
+version: 1.0.0
+date-released: 2026-09-13
+type: software
+repository-code: "https://github.com/qingyueliu/PS1-Qingyue"

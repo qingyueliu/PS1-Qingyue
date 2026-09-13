@@ -1,15 +1,291 @@
-<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Strategic Reasoning Lab · COMSCI/ECON 206</title><style>
-:root{--ink:#18324a;--blue:#315efb;--teal:#14877d;--line:#dbe3ec;--pale:#f5f7fb}*{box-sizing:border-box}body{margin:0;background:white;color:var(--ink);font:17px/1.5 system-ui,sans-serif}main{max-width:1180px;margin:auto;padding:34px 32px 44px}a{color:#174cb1}header{border-bottom:1px solid var(--line);padding-bottom:22px;margin-bottom:26px}.eyebrow{font-size:13px;font-weight:750;letter-spacing:.09em;color:var(--teal)}h1{font-size:44px;line-height:1.1;letter-spacing:-.03em;margin:12px 0}h2{font-size:25px;line-height:1.25;margin:0 0 15px}h3{font-size:18px;margin:16px 0 6px}p{margin:8px 0 15px}.lede{max-width:850px;font-size:19px}.grid{display:grid;grid-template-columns:1.05fr 1fr;gap:34px}.panel{padding:24px;border:1px solid var(--line);border-radius:16px}.tag{display:inline-block;padding:4px 10px;background:#edf7f5;color:#08645b;border-radius:5px;font-size:13px;font-weight:650}.matrix{border-collapse:collapse;width:100%;margin:18px 0;font-size:18px}.matrix th,.matrix td{padding:14px 8px;border-bottom:1px solid var(--line);text-align:center}.matrix th{font-size:14px}.matrix td:first-child{font-size:14px;text-align:left;font-weight:650}.matrix .efficient{background:#edf7f5}.matrix .safe{background:var(--pale)}.small{font-size:14px;color:#42576b}.choices{display:flex;gap:10px;margin:16px 0}button{border:1px solid var(--blue);border-radius:8px;background:var(--blue);color:white;padding:12px 18px;font:inherit;font-weight:650;cursor:pointer}button.secondary{background:white;color:var(--blue)}button:focus-visible,input:focus-visible{outline:3px solid #df982b;outline-offset:3px}.result{min-height:102px;padding:16px;background:var(--pale);border-radius:9px}.controls label{display:flex;justify-content:space-between;margin-top:12px;font-weight:620;font-size:15px}.controls input{width:100%;accent-color:var(--blue);margin:11px 0 0}.metric{font-size:36px;font-weight:750;color:var(--blue);margin-top:12px}.bar{height:23px;background:var(--pale);border-radius:5px;overflow:hidden;margin:10px 0}.bar span{display:block;height:100%;background:var(--blue);transition:width .15s}.bench{padding:13px 0;border-top:1px solid var(--line);margin-top:16px}.questions{margin-top:26px;padding:21px 24px;background:var(--pale);border-radius:12px;display:grid;grid-template-columns:repeat(3,1fr);gap:25px}.questions b{color:var(--teal)}details{margin-top:22px;border-top:1px solid var(--line);padding-top:16px}summary{cursor:pointer;font-weight:700}footer{font-size:13px;margin-top:22px;color:#42576b}.sr{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0,0,0,0)}@media(max-width:780px){main{padding:24px 18px}h1{font-size:36px}.grid,.questions{grid-template-columns:1fr}.panel{padding:20px}.choices{flex-wrap:wrap}}
-</style></head><body><main>
-<header><div class="eyebrow">COMSCI / ECON 206 · WEEK 3 · PROF. LUYAO ZHANG</div><h1>Will you coordinate?</h1><p class="lede">A good outcome depends on what someone else chooses. Play a synthetic opponent, then explore how beliefs and bounded reasoning change its behavior.</p><span class="tag">PS1 sample · synthetic classroom model</span></header>
-<div class="grid"><section class="panel"><h2>1. Choose in a coordination game</h2><p>Coordinate together for 8 each. The Safe action protects you if the other player does not coordinate.</p><table class="matrix" aria-label="Game payoffs, your payoff first"><thead><tr><th>You / opponent</th><th>Coordinate</th><th>Safe</th></tr></thead><tbody><tr><td>Coordinate</td><td class="efficient">8, 8</td><td>0, 7</td></tr><tr><td>Safe</td><td>7, 0</td><td class="safe" id="safe-cell">5, 5</td></tr></tbody></table><p class="small">Each cell shows your payoff, then the opponent’s. Choices are simultaneous; the opponent is sampled from the model on the right.</p><div class="choices"><button id="choose-c">Choose Coordinate</button><button id="choose-s" class="secondary">Choose Safe</button></div><div id="play-result" class="result" aria-live="polite">Make a prediction before playing. Which action would you choose, and what do you believe the opponent will do?</div></section>
-<section class="panel"><h2>2. Change the model</h2><div class="controls"><label for="safe">Safe–Safe payoff <output id="safe-val">5.0</output></label><input id="safe" type="range" min="1" max="7" step=".5" value="5"><label for="tau">Mean reasoning level τ <output id="tau-val">1.5</output></label><input id="tau" type="range" min="0" max="5" step=".1" value="1.5"><label for="gamma">Response precision growth γ <output id="gamma-val">1.2</output></label><input id="gamma" type="range" min="1" max="2" step=".05" value="1.2"></div><div class="metric" id="probability">—</div><div class="small">model probability of Coordinate</div><div class="bar" role="img" aria-label="Predicted coordination probability" id="prob-bar"><span id="prob-fill"></span></div><p id="payoff" class="small"></p><div class="bench"><strong>Nash benchmarks</strong><p class="small" id="benchmark"></p><p class="small" id="residual"></p></div></section></div>
-<section class="questions"><div><b>Economics</b><p>How do incentives change the appeal of coordination?</p></div><div><b>Computer science</b><p>Can you reproduce and check the prediction in Colab?</p></div><div><b>Behavioral science</b><p>What evidence could distinguish shallow reasoning from noisy choice?</p></div></section>
-<details><summary>Model, evidence, and research connection</summary><p>This is a simplified truncated logit cognitive hierarchy. Level 0 mixes uniformly; level k responds to a normalized Poisson mixture of lower levels. Precision is γ<sup>k</sup>. We retain levels 0–16 and renormalize. The model is neither a Nash solver nor a quantal-response-equilibrium fixed point.</p><p id="tail" class="small"></p><p>Inspired by <a href="https://papers.nips.cc/paper_files/paper/2025/hash/54b13427fc2c9180f85c3d76cdcf076e-Abstract-Conference.html">Jia et al., NeurIPS 2025</a>, with the baseline matrix from Table 1(b), and <a href="https://doi.org/10.1162/0033553041502225">Camerer, Ho &amp; Chong (2004)</a>. This original teaching adaptation does not reproduce the paper’s LLM evaluation. No real LLM calls or human research data are used.</p><p>Your proposal should state a hypothesis, compare alternative explanations, and distinguish expected findings from synthetic diagnostics. Use notebook 06 in the companion repository to inspect every calculation.</p></details>
-<footer>Runs locally in your browser. Choices stay in this page and disappear on refresh. No account, API key, or data collection. Course prototype; hosting is prepared separately.</footer>
-</main><script src="model.js"></script><script>
-const $=id=>document.getElementById(id);let current;let state=206;
-function redraw(){let safe=+$('safe').value,tau=+$('tau').value,gamma=+$('gamma').value;current=coordinationModel(tau,gamma,safe);$('safe-val').textContent=safe.toFixed(1);$('tau-val').textContent=tau.toFixed(1);$('gamma-val').textContent=gamma.toFixed(2);$('safe-cell').textContent=`${safe}, ${safe}`;let percent=(100*current.p).toFixed(1);$('probability').textContent=percent+'%';$('prob-fill').style.width=percent+'%';$('prob-bar').setAttribute('aria-label',`Predicted probability of Coordinate ${percent} percent`);$('payoff').textContent=`Expected payoff against this model: Coordinate ${current.uC.toFixed(2)}; Safe ${current.uS.toFixed(2)}.`;$('benchmark').textContent=`Both Coordinate and both Safe are pure equilibria. In the interior mixed equilibrium, each coordinates with probability ${(100*current.mixed).toFixed(1)}%.`;$('residual').textContent=`If both use the model distribution, the largest unilateral gain is ${current.regret.toFixed(3)} payoff units. A nonzero gain is allowed by this bounded-reasoning model.`;$('tail').textContent=`Omitted Poisson probability before normalization: ${current.tail.toExponential(2)}. This numerical approximation is distinct from behavioral validity.`;}
-function play(choice){state=(1664525*state+1013904223)>>>0;let opponent=(state/4294967296)<current.p?'Coordinate':'Safe';let safe=+$('safe').value;let payoff=choice==='Coordinate'?(opponent==='Coordinate'?8:0):(opponent==='Coordinate'?7:safe);$('play-result').textContent=`You chose ${choice}. The synthetic opponent chose ${opponent}. Your payoff: ${payoff}. One round does not establish a behavioral pattern; compare predictions across model settings.`;}
-for(let id of ['safe','tau','gamma'])$(id).addEventListener('input',redraw);$('choose-c').addEventListener('click',()=>play('Coordinate'));$('choose-s').addEventListener('click',()=>play('Safe'));redraw();
-</script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Strategic Reports and Cooperation</title>
+  <style>
+    :root{--ink:#172033;--muted:#657087;--paper:#fff;--bg:#f4f7fb;--line:#dce3ee;--blue:#315efb;--green:#087d57;--red:#bd3545;--soft:#f7f9fd}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif}
+    main{width:min(980px,calc(100% - 28px));margin:28px auto 60px}h1{margin:0 0 6px;font-size:clamp(1.7rem,4vw,2.5rem)}
+    h2{margin:0 0 7px;font-size:1.3rem}h3{margin:0 0 12px;font-size:1rem}.subtitle,.note{color:var(--muted);line-height:1.5}.subtitle{margin:0 0 22px}
+    .card{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:0 8px 28px #1b27420f;margin-bottom:16px}
+    .settings{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}label{display:grid;gap:6px;color:var(--muted);font-size:.86rem}
+    select,input,button{font:inherit;border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:#fff;color:var(--ink)}input{width:100%}
+    button{cursor:pointer;font-weight:700;transition:.15s ease}button:hover:not(:disabled){transform:translateY(-1px);border-color:var(--blue)}button:disabled{opacity:.4;cursor:not-allowed}
+    button.primary{background:var(--blue);border-color:var(--blue);color:#fff}button.cooperate{color:var(--green)}button.defect{color:var(--red)}
+    .row{display:flex;flex-wrap:wrap;gap:9px;margin-top:13px}.row button{min-width:130px}.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .panel{background:var(--soft);border:1px solid var(--line);border-radius:13px;padding:15px}.report{border-left:4px solid var(--blue);background:#fff;border-radius:9px;padding:13px;min-height:52px;line-height:1.45}
+    .result{margin-top:10px;color:var(--muted);min-height:44px;line-height:1.45}.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:14px}
+    .metric{background:var(--soft);border-radius:10px;padding:11px}.metric strong{display:block;font-size:1.25rem}.metric span{color:var(--muted);font-size:.78rem}
+    table{width:100%;border-collapse:collapse;margin-top:12px;font-size:.9rem}th,td{padding:10px 7px;border-bottom:1px solid var(--line);text-align:right}th:first-child,td:first-child{text-align:left}
+    .log{max-height:230px;overflow:auto;margin:12px 0 0;padding-left:22px;color:var(--muted)}.log li{margin:6px 0}.hidden{display:none}.status{font-weight:700;color:var(--blue)}
+    @media(max-width:720px){.settings,.two,.metrics{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<main>
+  <h1>Strategic Reports and Cooperation</h1>
+  <p class="subtitle">A repeated Prisoner's Dilemma with intrinsic rewards for honesty and intrinsic guilt from lying.</p>
+
+  <section class="card">
+    <h2>Shared assumptions</h2>
+    <p class="note">Except in the first round, C was B's opponent in the immediately preceding interaction and therefore knows B's actual choice. No institution verifies C's report.</p>
+    <div class="settings">
+      <label>Intrinsic reward for honest reporting
+        <input id="honestyReward" type="number" min="0" max="5" step="0.1" value="0.4">
+      </label>
+      <label>Intrinsic guilt cost of lying
+        <input id="lyingCost" type="number" min="0" max="5" step="0.1" value="0.2">
+      </label>
+    </div>
+    <p class="note">Payoffs: mutual cooperation = 3/3; unilateral defection = 4/0; mutual defection = 1/1.</p>
+  </section>
+
+  <section class="card">
+    <h2>Part 1 · Agent-only experiment</h2>
+    <p class="note">A, B, and C make decisions with Q-learning. You set the number of rounds and see only the aggregate results.</p>
+    <div class="settings">
+      <label>Information condition
+        <select id="autoCondition">
+          <option value="none">No third-party reports</option>
+          <option value="reports" selected>Strategic third-party reports</option>
+        </select>
+      </label>
+      <label>Number of rounds
+        <input id="autoRounds" type="number" min="10" max="100000" step="10" value="3000">
+      </label>
+    </div>
+    <div class="row"><button class="primary" id="runAgents">Run agent experiment</button></div>
+    <div id="autoResults" class="hidden"></div>
+  </section>
+
+  <section class="card">
+    <h2>Part 2 · Play as Agent A</h2>
+    <p class="note">Before each decision after round 1, C reports B's actual choice from their immediately preceding interaction. C can report truthfully or lie.</p>
+    <div class="settings">
+      <label>Number of player rounds
+        <input id="humanRounds" type="number" min="2" max="100" value="10">
+      </label>
+      <label>Learning randomness
+        <select id="humanRandomness">
+          <option value="0.05">Low</option>
+          <option value="0.12" selected>Medium</option>
+          <option value="0.25">High</option>
+        </select>
+      </label>
+    </div>
+    <div class="row"><button class="primary" id="startHuman">Start / restart player game</button></div>
+
+    <div id="humanGame" class="hidden" style="margin-top:16px">
+      <div class="two">
+        <div class="panel">
+          <h3>Round <span id="humanRound">1</span></h3>
+          <div id="humanReport" class="report">No previous observation is available in round 1.</div>
+          <div class="row">
+            <button class="cooperate" id="humanCooperate">Cooperate</button>
+            <button class="defect" id="humanDefect">Defect</button>
+          </div>
+          <div id="humanStatus" class="result">Choose your action as A.</div>
+        </div>
+        <div class="panel">
+          <h3>Current results</h3>
+          <div class="metrics">
+            <div class="metric"><strong id="humanScoreA">0</strong><span>Your score</span></div>
+            <div class="metric"><strong id="humanScoreB">0</strong><span>B's score</span></div>
+            <div class="metric"><strong id="humanCoop">—</strong><span>Mutual cooperation</span></div>
+          </div>
+          <div id="humanFinal" class="hidden"></div>
+        </div>
+      </div>
+      <ol id="humanLog" class="log"><li>No rounds completed.</li></ol>
+    </div>
+  </section>
+</main>
+
+<script>
+"use strict";
+var $=function(id){return document.getElementById(id);};
+var human=null;
+
+function num(id,fallback){
+  var n=Number($(id).value);
+  return Number.isFinite(n)?n:fallback;
+}
+function payoff(a,b){
+  if(a==="C"&&b==="C")return[3,3];
+  if(a==="C"&&b==="D")return[0,4];
+  if(a==="D"&&b==="C")return[4,0];
+  return[1,1];
+}
+function pct(n,d){return d?(100*n/d).toFixed(1)+"%":"—";}
+function chooseQ(q,epsilon){
+  if(Math.random()<epsilon)return Math.floor(Math.random()*q.length);
+  var max=Math.max.apply(null,q);
+  return q.indexOf(max);
+}
+function updateQ(q,index,reward,alpha,gamma){
+  q[index]+=alpha*(reward+gamma*Math.max.apply(null,q)-q[index]);
+}
+function actionFrom(index){return index===0?"C":"D";}
+function word(action){return action==="C"?"cooperated":"defected";}
+
+function intrinsicReport(qReport,actual,epsilon){
+  var decision=chooseQ(qReport,epsilon);
+  var truthful=decision===0;
+  var claim=truthful?actual:(actual==="C"?"D":"C");
+  var reward=truthful?num("honestyReward",0.4):-num("lyingCost",0.2);
+  updateQ(qReport,decision,reward,0.15,0.80);
+  return{truthful:truthful,claim:claim};
+}
+
+function runAuto(){
+  var rounds=Math.max(10,Math.min(100000,Math.floor(num("autoRounds",3000))));
+  var hasReports=$("autoCondition").value==="reports";
+  var epsilon=0.12,alpha=0.12,gamma=0.85;
+  var qAAction=[[0,0],[0,0],[0,0]],qATrust=[0,0],qB=[0,0],qCAction=[0,0],qReport=[0,0];
+  var mutual=0,honest=0,reports=0,trusted=0,exploit=0,welfare=0,scoreA=0,scoreB=0;
+
+  for(var t=0;t<rounds;t++){
+    var report=null;
+
+    if(t>0){
+      var cPriorIndex=chooseQ(qCAction,epsilon);
+      var bPriorIndex=chooseQ(qB,epsilon);
+      var cPrior=actionFrom(cPriorIndex),bPrior=actionFrom(bPriorIndex);
+      var priorPay=payoff(cPrior,bPrior);
+      updateQ(qCAction,cPriorIndex,priorPay[0],alpha,gamma);
+      updateQ(qB,bPriorIndex,priorPay[1],alpha,gamma);
+      if(hasReports){
+        report=intrinsicReport(qReport,bPrior,epsilon);
+        reports++;
+        if(report.truthful)honest++;
+      }
+    }
+
+    var trustIndex=report?chooseQ(qATrust,epsilon):0;
+    var usesReport=!!report&&trustIndex===1;
+    if(usesReport)trusted++;
+    var signal=usesReport?(report.claim==="C"?1:2):0;
+    var aIndex=chooseQ(qAAction[signal],epsilon);
+    var bIndex=chooseQ(qB,epsilon);
+    var aAction=actionFrom(aIndex),bAction=actionFrom(bIndex);
+    var gains=payoff(aAction,bAction);
+
+    updateQ(qAAction[signal],aIndex,gains[0],alpha,gamma);
+    if(report)updateQ(qATrust,trustIndex,gains[0],alpha,gamma);
+    updateQ(qB,bIndex,gains[1],alpha,gamma);
+
+    scoreA+=gains[0];scoreB+=gains[1];welfare+=gains[0]+gains[1];
+    if(aAction==="C"&&bAction==="C")mutual++;
+    if(aAction!==bAction)exploit++;
+  }
+
+  var reportCells=hasReports
+    ?"<tr><td>Report honesty</td><td>"+pct(honest,reports)+"</td></tr><tr><td>Reports used by A</td><td>"+pct(trusted,reports)+"</td></tr>"
+    :"<tr><td>Report honesty</td><td>Not applicable</td></tr><tr><td>Reports used by A</td><td>Not applicable</td></tr>";
+  $("autoResults").innerHTML=
+    "<table><tbody>"+
+    "<tr><td>Rounds</td><td>"+rounds+"</td></tr>"+
+    "<tr><td>Mutual cooperation</td><td>"+pct(mutual,rounds)+"</td></tr>"+
+    reportCells+
+    "<tr><td>Exploitative outcomes</td><td>"+pct(exploit,rounds)+"</td></tr>"+
+    "<tr><td>Average social welfare per round</td><td>"+(welfare/rounds).toFixed(2)+"</td></tr>"+
+    "<tr><td>Average payoff: A / B</td><td>"+(scoreA/rounds).toFixed(2)+" / "+(scoreB/rounds).toFixed(2)+"</td></tr>"+
+    "</tbody></table>";
+  $("autoResults").classList.remove("hidden");
+}
+
+function startHuman(){
+  human={
+    round:1,
+    limit:Math.max(2,Math.min(100,Math.floor(num("humanRounds",10)))),
+    epsilon:num("humanRandomness",0.12),
+    qB:[0,0],qCAction:[0,0],qReport:[0,0],
+    report:null,scoreA:0,scoreB:0,mutual:0,honest:0,reports:0,
+    exploit:0,welfare:0,history:[]
+  };
+  $("humanGame").classList.remove("hidden");
+  $("humanFinal").classList.add("hidden");
+  $("humanFinal").innerHTML="";
+  $("humanStatus").textContent="Choose your action as A.";
+  $("humanLog").innerHTML="<li>No rounds completed.</li>";
+  $("humanCooperate").disabled=false;
+  $("humanDefect").disabled=false;
+  prepareHumanRound();
+  updateHumanDisplay();
+}
+
+function prepareHumanRound(){
+  human.report=null;
+  if(human.round===1){
+    $("humanReport").textContent="No previous observation is available in round 1.";
+    return;
+  }
+
+  var cIndex=chooseQ(human.qCAction,human.epsilon);
+  var bIndex=chooseQ(human.qB,human.epsilon);
+  var cAction=actionFrom(cIndex),bObserved=actionFrom(bIndex);
+  var gains=payoff(cAction,bObserved);
+  updateQ(human.qCAction,cIndex,gains[0],0.15,0.80);
+  updateQ(human.qB,bIndex,gains[1],0.15,0.80);
+
+  human.report=intrinsicReport(human.qReport,bObserved,human.epsilon);
+  human.reports++;
+  if(human.report.truthful)human.honest++;
+  $("humanReport").textContent="C reports that B "+word(human.report.claim)+" in B's immediately preceding interaction.";
+}
+
+function humanPlay(aAction){
+  if(!human||human.round>human.limit)return;
+  var bIndex=chooseQ(human.qB,human.epsilon);
+  var bAction=actionFrom(bIndex);
+  var gains=payoff(aAction,bAction);
+  updateQ(human.qB,bIndex,gains[1],0.15,0.80);
+
+  human.scoreA+=gains[0];human.scoreB+=gains[1];human.welfare+=gains[0]+gains[1];
+  if(aAction==="C"&&bAction==="C")human.mutual++;
+  if(aAction!==bAction)human.exploit++;
+  human.history.unshift("Round "+human.round+": A "+word(aAction)+", B "+word(bAction)+"; payoff "+gains[0]+"/"+gains[1]+".");
+  $("humanStatus").textContent="Result: you "+word(aAction)+", B "+word(bAction)+". You received "+gains[0]+" and B received "+gains[1]+".";
+
+  human.round++;
+  if(human.round>human.limit){
+    finishHuman();
+  }else{
+    prepareHumanRound();
+  }
+  updateHumanDisplay();
+}
+
+function updateHumanDisplay(){
+  $("humanRound").textContent=Math.min(human.round,human.limit);
+  $("humanScoreA").textContent=human.scoreA;
+  $("humanScoreB").textContent=human.scoreB;
+  $("humanCoop").textContent=pct(human.mutual,Math.min(human.round-1,human.limit));
+  $("humanLog").innerHTML=human.history.length
+    ?human.history.map(function(x){return"<li>"+x+"</li>";}).join("")
+    :"<li>No rounds completed.</li>";
+}
+
+function finishHuman(){
+  $("humanCooperate").disabled=true;
+  $("humanDefect").disabled=true;
+  $("humanReport").textContent="The player game is complete.";
+  $("humanStatus").textContent="Final aggregate results are shown here.";
+  $("humanFinal").innerHTML=
+    "<table><tbody>"+
+    "<tr><td>C's report honesty</td><td>"+pct(human.honest,human.reports)+"</td></tr>"+
+    "<tr><td>Exploitative outcomes</td><td>"+pct(human.exploit,human.limit)+"</td></tr>"+
+    "<tr><td>Average social welfare</td><td>"+(human.welfare/human.limit).toFixed(2)+"</td></tr>"+
+    "</tbody></table>";
+  $("humanFinal").classList.remove("hidden");
+}
+
+$("runAgents").addEventListener("click",runAuto);
+$("startHuman").addEventListener("click",startHuman);
+$("humanCooperate").addEventListener("click",function(){humanPlay("C");});
+$("humanDefect").addEventListener("click",function(){humanPlay("D");});
+</script>
+</body>
+</html>

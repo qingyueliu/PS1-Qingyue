@@ -2,7 +2,7 @@
 %%% Do NOT edit. File created by BibTeX with style
 %%% ACM-Reference-Format-Journals [18-Jan-2012].
 
-\begin{thebibliography}{8}
+\begin{thebibliography}{10}
 
 %%% ====================================================================
 %%% NOTE TO THE USER: you can override these defaults by providing
@@ -40,33 +40,40 @@
 \@ifundefined{NAT@parse@date}{}{\def\NAT@parse@date#1#2#3#4#5#6@@{\NAT@parse@date@orig#1#2#3#4#5#6@@\def\NAT@tempyear{0000}\def\NAT@tempexlab{{?}}\ifx\NAT@year\NAT@tempyear\ifx\NAT@exlab\NAT@tempexlab\def\NAT@date{[n.\,d.]}\else\edef\NAT@date{[n.\,d.]\NAT@exlab}\fi\fi}}
 \makeatother
 
-\bibitem[Camerer et~al\mbox{.}(2004)]%
-        {camerer2004}
-\bibfield{author}{\bibinfo{person}{Colin~F. Camerer}, \bibinfo{person}{Teck-Hua
-  Ho}, {and} \bibinfo{person}{Juin-Kuan Chong}.}
-  \bibinfo{year}{2004}\natexlab{}.
-\newblock \showarticletitle{A Cognitive Hierarchy Model of Games}.
-\newblock \bibinfo{journal}{\emph{The Quarterly Journal of Economics}}
-  \bibinfo{volume}{119}, \bibinfo{number}{3} (\bibinfo{year}{2004}),
-  \bibinfo{pages}{861--898}.
-\newblock
-\href{https://doi.org/10.1162/0033553041502225}{doi:\nolinkurl{10.1162/0033553041502225}}
-
-
-\bibitem[Gupta et~al\mbox{.}(2024)]%
-        {gupta2024}
-\bibfield{author}{\bibinfo{person}{Shashank Gupta}, \bibinfo{person}{Vaishnavi
-  Shrivastava}, \bibinfo{person}{Ameet Deshpande}, \bibinfo{person}{Ashwin
-  Kalyan}, \bibinfo{person}{Peter Clark}, \bibinfo{person}{Ashish Sabharwal},
-  {and} \bibinfo{person}{Tushar Khot}.} \bibinfo{year}{2024}\natexlab{}.
-\newblock \showarticletitle{Bias Runs Deep: Implicit Reasoning Biases in
-  Persona-Assigned {LLMs}}. In \bibinfo{booktitle}{\emph{International
-  Conference on Learning Representations}}.
+\bibitem[{Association for Computing Machinery}(2025)]%
+        {turing2024}
+\bibfield{author}{\bibinfo{person}{{Association for Computing Machinery}}.}
+  \bibinfo{year}{2025}\natexlab{}.
+\newblock \bibinfo{booktitle}{\emph{Andrew Barto and Richard Sutton Recognized
+  as Pioneers of Reinforcement Learning}}.
 \newblock
 \urldef\tempurl%
-\url{https://openreview.net/forum?id=kGteeZ18Ir}
+\url{https://amturing.acm.org/?pg=awards.html}
 \showURL{%
 \tempurl}
+
+
+\bibitem[{CodeCarbon}(2026)]%
+        {codecarbon}
+\bibfield{author}{\bibinfo{person}{{CodeCarbon}}.}
+  \bibinfo{year}{2026}\natexlab{}.
+\newblock \bibinfo{booktitle}{\emph{CodeCarbon}}.
+\newblock
+\urldef\tempurl%
+\url{https://github.com/mlco2/codecarbon}
+\showURL{%
+\tempurl}
+
+
+\bibitem[Crawford and Sobel(1982)]%
+        {crawford1982}
+\bibfield{author}{\bibinfo{person}{Vincent~P. Crawford} {and}
+  \bibinfo{person}{Joel Sobel}.} \bibinfo{year}{1982}\natexlab{}.
+\newblock \showarticletitle{Strategic Information Transmission}.
+\newblock \bibinfo{journal}{\emph{Econometrica}} \bibinfo{volume}{50},
+  \bibinfo{number}{6} (\bibinfo{year}{1982}), \bibinfo{pages}{1431--1451}.
+\newblock
+\href{https://doi.org/10.2307/1913390}{doi:\nolinkurl{10.2307/1913390}}
 
 
 \bibitem[Harsanyi(1968)]%
@@ -81,42 +88,43 @@
 \href{https://doi.org/10.1287/mnsc.14.5.320}{doi:\nolinkurl{10.1287/mnsc.14.5.320}}
 
 
-\bibitem[Jia et~al\mbox{.}(2025)]%
-        {jia2025}
-\bibfield{author}{\bibinfo{person}{Jingru Jia}, \bibinfo{person}{Zehua Yuan},
-  \bibinfo{person}{Junhao Pan}, \bibinfo{person}{Paul~E. McNamara}, {and}
-  \bibinfo{person}{Deming Chen}.} \bibinfo{year}{2025}\natexlab{}.
-\newblock \showarticletitle{{LLM} Strategic Reasoning: Agentic Study through
-  Behavioral Game Theory}. In \bibinfo{booktitle}{\emph{Advances in Neural
-  Information Processing Systems}}, Vol.~\bibinfo{volume}{38}.
+\bibitem[{Nobel Prize Outreach}(1994)]%
+        {nobel1994}
+\bibfield{author}{\bibinfo{person}{{Nobel Prize Outreach}}.}
+  \bibinfo{year}{1994}\natexlab{}.
+\newblock \bibinfo{booktitle}{\emph{The Sveriges Riksbank Prize in Economic
+  Sciences in Memory of Alfred Nobel 1994}}.
 \newblock
-\href{https://doi.org/10.52202/085713-1955}{doi:\nolinkurl{10.52202/085713-1955}}
+\urldef\tempurl%
+\url{https://www.nobelprize.org/prizes/economic-sciences/1994/summary/}
+\showURL{%
+\tempurl}
 
 
-\bibitem[Nash(1950)]%
-        {nash1950}
-\bibfield{author}{\bibinfo{person}{John~F. Nash}.}
-  \bibinfo{year}{1950}\natexlab{}.
-\newblock \showarticletitle{Equilibrium Points in n-Person Games}.
+\bibitem[{OpenFisca}(2026)]%
+        {openfisca}
+\bibfield{author}{\bibinfo{person}{{OpenFisca}}.}
+  \bibinfo{year}{2026}\natexlab{}.
+\newblock \bibinfo{booktitle}{\emph{OpenFisca Core}}.
+\newblock
+\urldef\tempurl%
+\url{https://github.com/openfisca/openfisca-core}
+\showURL{%
+\tempurl}
+
+
+\bibitem[Sommerfeld et~al\mbox{.}(2007)]%
+        {sommerfeld2007}
+\bibfield{author}{\bibinfo{person}{Ralf~D. Sommerfeld},
+  \bibinfo{person}{Hans-Juergen Krambeck}, \bibinfo{person}{Dirk Semmann},
+  {and} \bibinfo{person}{Manfred Milinski}.} \bibinfo{year}{2007}\natexlab{}.
+\newblock \showarticletitle{Gossip as an Alternative for Direct Observation in
+  Games of Indirect Reciprocity}.
 \newblock \bibinfo{journal}{\emph{Proceedings of the National Academy of
-  Sciences}} \bibinfo{volume}{36}, \bibinfo{number}{1} (\bibinfo{year}{1950}),
-  \bibinfo{pages}{48--49}.
+  Sciences}} \bibinfo{volume}{104}, \bibinfo{number}{44}
+  (\bibinfo{year}{2007}), \bibinfo{pages}{17435--17440}.
 \newblock
-\href{https://doi.org/10.1073/pnas.36.1.48}{doi:\nolinkurl{10.1073/pnas.36.1.48}}
-
-
-\bibitem[Rogers et~al\mbox{.}(2009)]%
-        {rogers2009}
-\bibfield{author}{\bibinfo{person}{Brian~W. Rogers}, \bibinfo{person}{Thomas~R.
-  Palfrey}, {and} \bibinfo{person}{Colin~F. Camerer}.}
-  \bibinfo{year}{2009}\natexlab{}.
-\newblock \showarticletitle{Heterogeneous Quantal Response Equilibrium and
-  Cognitive Hierarchies}.
-\newblock \bibinfo{journal}{\emph{Journal of Economic Theory}}
-  \bibinfo{volume}{144}, \bibinfo{number}{4} (\bibinfo{year}{2009}),
-  \bibinfo{pages}{1440--1467}.
-\newblock
-\href{https://doi.org/10.1016/j.jet.2008.11.010}{doi:\nolinkurl{10.1016/j.jet.2008.11.010}}
+\href{https://doi.org/10.1073/pnas.0704598104}{doi:\nolinkurl{10.1073/pnas.0704598104}}
 
 
 \bibitem[{United Nations}(nd)]%
@@ -131,18 +139,27 @@
 \tempurl}
 
 
-\bibitem[Zhang et~al\mbox{.}(2025)]%
-        {zhang2025}
-\bibfield{author}{\bibinfo{person}{Yadong Zhang}, \bibinfo{person}{Shaoguang
-  Mao}, \bibinfo{person}{Tao Ge}, \bibinfo{person}{Xun Wang},
-  \bibinfo{person}{Yan Xia}, \bibinfo{person}{Man Lan}, {and}
-  \bibinfo{person}{Furu Wei}.} \bibinfo{year}{2025}\natexlab{}.
-\newblock \showarticletitle{{K}-Level Reasoning: Establishing Higher Order
-  Beliefs in Large Language Models for Strategic Reasoning}. In
-  \bibinfo{booktitle}{\emph{Proceedings of NAACL}}.
-  \bibinfo{pages}{7212--7234}.
+\bibitem[Watkins and Dayan(1992)]%
+        {watkins1992}
+\bibfield{author}{\bibinfo{person}{Christopher J. C.~H. Watkins} {and}
+  \bibinfo{person}{Peter Dayan}.} \bibinfo{year}{1992}\natexlab{}.
+\newblock \showarticletitle{Q-Learning}.
+\newblock \bibinfo{journal}{\emph{Machine Learning}}  \bibinfo{volume}{8}
+  (\bibinfo{year}{1992}), \bibinfo{pages}{279--292}.
 \newblock
-\href{https://doi.org/10.18653/v1/2025.naacl-long.370}{doi:\nolinkurl{10.18653/v1/2025.naacl-long.370}}
+\href{https://doi.org/10.1007/BF00992698}{doi:\nolinkurl{10.1007/BF00992698}}
+
+
+\bibitem[wing Leung et~al\mbox{.}(2026)]%
+        {leung2026}
+\bibfield{author}{\bibinfo{person}{Chin wing Leung}, \bibinfo{person}{Paolo
+  Turrini}, \bibinfo{person}{Fernando~P. Santos}, {and} \bibinfo{person}{Mirco
+  Musolesi}.} \bibinfo{year}{2026}\natexlab{}.
+\newblock \showarticletitle{Learning to Cooperate with Minimal Observability}.
+  In \bibinfo{booktitle}{\emph{Proceedings of the AAAI Conference on Artificial
+  Intelligence}}, Vol.~\bibinfo{volume}{40}. \bibinfo{pages}{29521--29529}.
+\newblock
+\href{https://doi.org/10.1609/aaai.v40i35.40194}{doi:\nolinkurl{10.1609/aaai.v40i35.40194}}
 
 
 \end{thebibliography}

@@ -1,0 +1,23 @@
+name: Validate PS1 baseline
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  baseline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run the strategic-reporting tests
+        run: python -m unittest discover -s companion/tests -v
+      - name: Validate saved JSON and notebook structure
+        run: |
+          python -m json.tool companion/outputs/ps1_condition_panel.json > /dev/null
+          python -m json.tool companion/notebooks/strategic_reporting_qlearning.ipynb > /dev/null

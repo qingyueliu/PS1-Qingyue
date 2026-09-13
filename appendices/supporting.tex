@@ -1,54 +1,84 @@
 \clearpage\nobalance
 \section*{Author Notes}
 \subsection*{Acknowledgements}
-I thank Prof. Luyao Zhang, Program Chair, and Prof. Ken Rogerson, Program Discussant, of the \emph{2056 Nobel and Turing Laureate Program Launch Workshop}, held at Duke Kunshan University on September 7, 2026. I also thank [full name of teammate 1] and [full name of teammate 2], my teammates in [session number and full session title], and the rest of the COMSCI/ECON 206 Autumn 2026 Session 1 class for their questions and discussion. [Identify a specific contribution you actually used.] I am responsible for the proposal and remaining errors.
+I thank Prof. Luyao Zhang, Program Chair, and Prof. Ken Rogerson, Program Discussant, of the \emph{2056 Nobel and Turing Laureate Program Launch Workshop}, held at Duke Kunshan University on September 7, 2026. I also thank Feiyu Li and Yitong Lin, my teammates in Session G, \emph{Promises, Deception, and Coordination}, and the rest of the COMSCI/ECON 206 Autumn 2026 Session 1 class for their questions and discussion. Preparing the session alongside their work on economic credibility and computational deception detection helped me distinguish incentives from trust and detection. I am responsible for the proposal and remaining errors.
+
 \subsection*{Individual contribution}
-[State what you personally designed, implemented, wrote, checked, and adapted. Identify shared code or other contributions accurately. Program roles and feedback do not automatically imply coauthorship.]
+I framed the A--B--C reporting game, selected its payoff and information structure, specified the intrinsic honesty reward and lying cost, designed and tested the Week 2 browser demonstration, interpreted the recorded outputs, and revised the research questions. I adapted the course ACM/Overleaf template and its editable-figure structure. AI assistance used for drafting, debugging, and formatting is disclosed below; I checked the game rules, calculations, source links, and evidence labels.
 
 \bibliographystyle{ACM-Reference-Format}\bibliography{references}
+
 \appendix
 \section{Technical details and reproducibility}
-[Supply derivations, inputs, package versions, seed where relevant, actual outputs and limitations. Identify repository commit, notebook cells and demo version. Include the fresh-run record.]
+The browser baseline uses A and B payoffs $(3,3)$, $(0,4)$, $(4,0)$, and $(1,1)$. Except in round 1, each period begins with a C--B exposure interaction. C observes B's exposure-stage action, reports it, and then A and B play the focal interaction. C receives $+0.4$ for truth and $-0.2$ for lying. Action Q-learning uses $\alpha=0.12$, $\gamma=0.85$, and $\epsilon=0.12$; reporter learning uses $\alpha_C=0.15$ and $\gamma_C=0.80$. Reported cooperation, exploitation, and welfare measure the focal A--B interaction; exposure-stage payoffs are not included in the welfare statistic. Restarting clears scores and Q-values. The Hugging Face Space is static HTML/CSS/JavaScript with no API, database, backend, secret, paid service, or hosted CPU/GPU runtime.
+
+The earlier browser outputs were unseeded single runs. The PS1 notebook supplies a deterministic Python reconstruction using seeds 0--29 and 10,000 rounds per seed. It compares no report, strategic report, verified report, and a higher lying cost. Run \texttt{python companion/src/strategic\_reporting.py}; the saved output is in \texttt{companion/outputs/ps1\_condition\_panel.json}. Unit tests check the payoff table, strict dominance of defection, repeatability by seed, and condition labels. The reconstruction mirrors the demonstration's learning rules, but it is not a reproduction of Leung et al.'s population and partner-selection model~\cite{leung2026}.
+
+\begin{table}[h]
+\caption{Seeded PS1 synthetic check: means over 30 seeds and 10,000 rounds.}
+\begin{tabularx}{\columnwidth}{@{}Yrrrr@{}}\toprule
+Condition & Coop.\% & Honest\% & Used\% & Welfare\\\midrule
+No report & 3.29 & -- & -- & 2.38\\
+Strategic & 2.75 & 93.98 & 43.60 & 2.38\\
+Verified & 2.39 & 100.00 & 100.00 & 2.36\\
+High lie cost & 2.75 & 93.98 & 43.60 & 2.38\\\bottomrule
+\end{tabularx}
+\end{table}
+
+Across-seed SDs for cooperation are 3.74, 1.62, 1.83, and 1.62 percentage points in table order. Thus the panel supports the limited claim that all four conditions converge toward low cooperation under the stated learning rule; it does not establish that verification causally lowers cooperation. The code and saved output retain additional dispersion statistics for audit.
+
 \subsection{AI-use disclosure}
-AI-Assisted drafting and debugging are permitted after initial independent reasoning. Initial reasoning and handwritten reflection are Human-Only. Record tool/model, date, purpose, significant prompts, accepted or rejected suggestions, human changes and verification. If none, state ``No generative AI was used.'' The human author is responsible for every claim, citation and computation.
+I used ChatGPT 5.6 Sol on August 30, September 5, and September 9, 2026 to organize my proposal, revise wording, create and debug the browser simulation, and synthesize cumulative worksheet responses. On September 13, 2026, I used OpenAI Codex with GPT-5.6 Sol to adapt the course LaTeX template, draft the five-section PS1 structure from my existing work, generate a seeded standard-library Python reconstruction, prepare an editable Draw.io teaser, and audit the draft against the instructor's grading criteria. I retained my independently chosen research question, A--B--C mechanism, payoff structure, and interpretation that honesty alone did not sustain cooperation. I rejected treating simulated Q-values as human mental states or finite-seed mean gaps as causal effects, and labeled new outputs as synthetic. I reviewed the wording and remain responsible for every claim, citation, and computation. Initial reasoning, handwritten reflections, and peer reviews remain Human-Only.
 
 \section{Cumulative Intellectual Development}
-This proposal develops my Intellectual Statement II through the \emph{2056 Nobel and Turing Laureate Program Launch Workshop}, held on September 7, 2026 at Duke Kunshan University, IB 2050. Program Chair: Prof. Luyao Zhang. Program Discussant: Prof. Ken Rogerson. My session: [number and full title]. My role: [assigned role]. My teammates: [full name 1] and [full name 2]. I acknowledge their contributions and the rest of the class's questions and discussion.
+This proposal develops my Intellectual Statement II through the \emph{2056 Nobel and Turing Laureate Program Launch Workshop}, held on September 7, 2026 at Duke Kunshan University, IB 2050. Program Chair: Prof. Luyao Zhang. Program Discussant: Prof. Ken Rogerson. My session was Session G, \emph{Promises, Deception, and Coordination}; my role was Speaker 3 and behavioral-science contributor. My teammates were Feiyu Li and Yitong Lin.
 
-[Trace an earlier claim, a specific dated comment or piece of evidence, and the resulting revision with its intellectual consequence. Do not write only a chronological diary. Retain and revise the 2056 contribution statement.]
+My Week 1 claim treated reports mainly as true or false. Field observations and the CodeCarbon and OpenFisca examples led me to distinguish honesty from accuracy, completeness, and verifiability. Preparing Session G separated three mechanisms: Feiyu Li's economics contribution emphasized incentive credibility, Yitong Lin's computer-science contribution emphasized detecting planned deception, and my behavioral-science contribution emphasized strategic uncertainty. On September 9, the longer simulation runs challenged my expectation that high honesty would preserve cooperation: honesty remained near 94\%, while cooperation and welfare fell. I therefore changed the proposal from ``does lying destroy cooperation?'' to ``when does credible information become behaviorally useful?'' and added controlled information conditions and a social-planner welfare benchmark.
 
-Appendix~\ref{app:abstract} contains the structured abstract in the cumulative reflection format. Update its eight rows and preserve the prior version. The Expected 2056 Nobel Prize and Turing Award contribution statement in Section 5 must follow from the foundation, current-era boundary and interdisciplinary milestones.
+My earlier aspiration was to develop a game-theoretic allocation system that is fair, efficient, sustainable, and difficult to manipulate. The revised statement narrows the unresolved boundary to auditable allocation when decisions depend on strategic third-party information. Appendix~\ref{app:abstract} records the current version; earlier Week 1--3 files are preserved separately.
 
 \section{Field and open-source inspiration}
-The \emph{Joint Interdisciplinary Field Trip---Technology, Computation, Culture \& Society in Action} took place on September 4, 2026. Record your actual observations at \textbf{Tencent Shanghai Office} and \textbf{Shanghai Science and Technology Museum}. State attendance accurately.
+I attended the \emph{Joint Interdisciplinary Field Trip---Technology, Computation, Culture \& Society in Action} on September 4, 2026 and recorded the following observations.
 
-[Retain one industry photograph and one public-sector photograph from the earlier assignment. Each caption gives exact site, September 4, 2026 visit date, photographer/source, activity or exhibit, and relevance. Distinguish observation from interpretation; connect each setting to an open-source inspiration, subsequent research, and proposed practical value. If you lacked first-hand access, identify an attributed alternative instead of claiming attendance.]
+\begin{figure}[h]
+\centering
+\includegraphics[width=\columnwidth]{figures/field/tencent_green_cloud.jpeg}
+\caption{Tencent Shanghai Office, September 4, 2026. Photograph by Qingyue Liu. Direct observation: a display reported green-cloud energy and emissions measures. Interpretation: decision makers need auditable evidence, but quantified reports may still be incomplete. CodeCarbon inspired separating reported measurements from their coverage limits.}
+\Description{A Tencent exhibit screen titled Green cloud computing displays renewable-energy capacity, electricity purchase, energy savings, and reported carbon-emission reductions.}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\columnwidth]{figures/field/museum_mechanical_claw.jpeg}
+\caption{Shanghai Science and Technology Museum, September 4, 2026. Photograph by Qingyue Liu. Direct observation: visitors could control a mechanical claw. Interpretation: interactive experience can communicate a mechanism more clearly than reported numbers alone. This observation motivated the playable Agent A mode and the SDG 4 learning use.}
+\Description{A visitor operates a joystick beside an enclosed mechanical-claw exhibit with an instructional screen and robotic arms.}
+\end{figure}
+
+CodeCarbon 3.3.0 estimates computing energy and carbon emissions but omits some network, storage, and cooling components~\cite{codecarbon}; this motivates honest-but-incomplete reports. OpenFisca 44.7.0 converts policy rules into executable models but depends on correct rules and inputs~\cite{openfisca}; this motivates explicit institutional rules and a social-planner benchmark. These are inspirations, not software dependencies of the PS1 simulation.
 
 \section{Review response and revision record}
-[Retain v1, both peer reviews, author rebuttal, reviewer follow-up and v2. Use the three review themes: strengths to retain, constructive concerns to address, and questions to clarify. Explain your decisions, changed locations and actual verification results. Justify any retained approach or deferred work.]
+This is the preserved v1 draft for class review on September 14, 2026. Two peer reviews, the author rebuttal, reviewer follow-up, and v2 are pending and are not invented here. After review, I will record each consequential concern, the section or notebook cell changed, the rerun performed, and whether the evidence resolved the concern.
 
 \clearpage\onecolumn
 \section{Structured abstract and cumulative proposal map}\label{app:abstract}
-Update this structured abstract with each cumulative reflection. Replace each prompt with a brief, concrete entry and retain earlier versions. The first seven rows summarize the research; the final row records feedback and revision. Detailed optional prompts are in the separate Scaffolding Companion.
+Table~\ref{tab:abstract-map} updates the eight-row cumulative proposal map while preserving earlier Week 3 files.
 \par\medskip
 \begin{table}[H]
-\caption{Appendix E structured abstract template; retain the eight-row proposal structure.}
+\caption{Appendix E structured abstract and cumulative proposal map.}
 \label{tab:abstract-map}
 \renewcommand{\arraystretch}{1.18}
-\begin{tabularx}{\textwidth}{@{}p{0.27\textwidth}Y@{}}
+\begin{tabularx}{\textwidth}{@{}p{0.24\textwidth}Y@{}}
 \toprule
 \textbf{Proposal element} & \textbf{Current statement / change} \\
 \midrule
-Background & State the strategic setting, established knowledge and unresolved issue. Cite the key foundation. \\
-Motivation and application & Explain why the issue matters now, the application scenario, affected people and the need the project addresses. \\
-Three connected questions & State one economics question, one computer-science question and one behavioral-science question. End with the integrated question that requires all three. \\
-Method and model assumptions & Specify players, actions or strategies, incentives, timing and information; then the model, baseline, computation and evidence needed. \\
-Results or expected results & State what was actually obtained and label its evidence type. Separately state expected results, the test and what finding would challenge the claim. \\
-Intellectual merits & Explain what is learned beyond the cited foundation and why integrating the three disciplines changes the answer. \\
-Practical impacts & Identify private- and public-sector value. Explain the open-access learning tool's intended contribution to SDG 4 and how its usefulness could be assessed. \\
-Feedback received and revision made & Name the dated feedback source, earlier claim, actual revision and intellectual consequence. Preserve prior versions; state accurately if feedback is pending. \\
+Background & Minimal third-party observation can support cooperation among learning agents~\cite{leung2026}, but existing models do not establish what happens when an observer strategically reports information that may be false, incomplete, or unverifiable. \\
+Motivation and application & Reputation systems, AI-agent platforms, marketplaces, and public allocation depend on reports about potential partners. The project asks when those reports improve decisions rather than create a manipulable information channel. \\
+Three connected questions & Economics asks which incentives and verification rules make reports welfare improving; computer science asks whether Q-learners use them effectively; behavioral science asks whether report use reflects calibrated trust or competing mechanisms. Integrated question: when does credible information become behaviorally useful? \\
+Method and model assumptions & C observes B's previous action and may report truthfully or lie; A uses or ignores the report; A and B play a repeated Prisoner's Dilemma. A seeded Q-learning panel compares no report, strategic report, verified report, and a higher lying cost, tracking cooperation, honesty, report use, exploitation, and welfare. \\
+Results or expected results & Obtained browser simulations showed cooperation falling from 85.0\% at 100 rounds to 0.7\% at 100,000 rounds while honesty stayed near 94\%. The seeded PS1 check found 2.75\% cooperation under strategic reporting and 2.39\% under verification, but the across-seed dispersion means this gap is descriptive, not a causal verification effect. Planned partner-selection tests could challenge the conclusion by making accurate reports consequential. \\
+Intellectual merits & The proposal connects incomplete-information incentives, reproducible reinforcement learning, and behavioral trust. It distinguishes honesty, accuracy, verifiability, and usefulness, showing why reliable messages need not change a dominant-action outcome. \\
+Practical impacts & The model can inform reputation and audit rules in private and public allocation. The open-access game supports an intended SDG 4 learning activity; pre/post explanations of the honesty--cooperation distinction provide a feasible evaluation indicator. \\
+Feedback received and revision made & September 4 field evidence and open-source tools exposed incomplete reporting; September 7 Session G preparation separated credibility, detection, and strategic uncertainty; September 9 simulation results rejected my expectation that high honesty would sustain cooperation. I added controlled comparisons, a social-planner benchmark, and explicit evidence labels. Peer-review feedback is pending. \\
 \bottomrule
 \end{tabularx}
 \end{table}
-\noindent Keep field observations, photographs, literature notes, open-source inspirations and AI-use disclosure in the supporting sections. Distinguish observation, interpretation and proposed future evidence. The Open Science Statement groups GitHub and Colab; the Statement of Contribution to the UN's SDGs groups the Hugging Face learning tool.
-

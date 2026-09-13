@@ -1,0 +1,22 @@
+{
+  "evidence_type": "synthetic deterministic reconstruction",
+  "rounds_per_seed": 10000,
+  "seeds": "0-29",
+  "parameters": {
+    "epsilon": 0.12,
+    "action_alpha": 0.12,
+    "action_gamma": 0.85,
+    "report_alpha": 0.15,
+    "report_gamma": 0.80,
+    "honesty_reward": 0.40,
+    "baseline_lying_cost": 0.20,
+    "high_lying_cost": 1.00
+  },
+  "summary_statistics": "population mean and population standard deviation across the 30 fixed computational seeds",
+  "rows": [
+    {"condition": "none", "cooperation_pct": 3.2937, "cooperation_pct_sd": 3.7359, "honesty_pct": null, "honesty_pct_sd": null, "reports_used_pct": null, "reports_used_pct_sd": null, "exploit_pct": 12.5980, "exploit_pct_sd": 0.9003, "welfare": 2.3837, "welfare_sd": 0.1565},
+    {"condition": "strategic", "cooperation_pct": 2.7450, "cooperation_pct_sd": 1.6240, "honesty_pct": 93.9847, "honesty_pct_sd": 0.3123, "reports_used_pct": 43.6044, "reports_used_pct_sd": 6.4662, "exploit_pct": 13.2960, "exploit_pct_sd": 0.8062, "welfare": 2.3757, "welfare_sd": 0.0739},
+    {"condition": "verified", "cooperation_pct": 2.3860, "cooperation_pct_sd": 1.8277, "honesty_pct": 100.0000, "honesty_pct_sd": 0.0000, "reports_used_pct": 100.0000, "reports_used_pct_sd": 0.0000, "exploit_pct": 13.1440, "exploit_pct_sd": 1.0205, "welfare": 2.3583, "welfare_sd": 0.0793},
+    {"condition": "high_lie_cost", "cooperation_pct": 2.7450, "cooperation_pct_sd": 1.6240, "honesty_pct": 93.9847, "honesty_pct_sd": 0.3123, "reports_used_pct": 43.6044, "reports_used_pct_sd": 6.4662, "exploit_pct": 13.2960, "exploit_pct_sd": 0.8062, "welfare": 2.3757, "welfare_sd": 0.0739}
+  ]
+}
