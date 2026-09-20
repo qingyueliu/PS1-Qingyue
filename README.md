@@ -34,11 +34,11 @@ To try the educational game locally, open companion/hf_space/index.html in a bro
 
 ## Rubric readiness
 
-RUBRIC_AUDIT.md maps v2 to the instructor's four-part scorecard. V1, original reviews, author response, v2 source, tests, seed-level outputs, and artifact links are retained. V2 PDF compilation, remote publication, reviewer follow-up, and Canvas submission remain external steps.
+RUBRIC_AUDIT.md maps v2 to the instructor's four-part scorecard. V1, original reviews, author response, v2 source, tests, seed-level outputs, and artifact links are retained. The reviewed source/code is published on GitHub and the matching game is live on Hugging Face. V2 PDF compilation, reviewer follow-up, and Canvas submission remain external steps.
 
 ## Use with Overleaf
 
-Import the repository or this ZIP into Overleaf, select main.tex, choose pdfLaTeX, and compile twice if references are initially unresolved. Before submission, confirm personal links and add the final commit hash. See GITHUB_OVERLEAF_GUIDE_CN.md.
+Import the repository or this ZIP into Overleaf, select main.tex, choose pdfLaTeX, and compile twice if references are initially unresolved. The paper records published source snapshot 2fc74e1. See GITHUB_OVERLEAF_GUIDE_CN.md.
 
 ## Reuse and attribution
 

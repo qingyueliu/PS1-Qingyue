@@ -19,9 +19,6 @@ This is a preparation checklist, not an instructor score and not part of the two
 
 ## External steps before Canvas submission
 
-- Publish the reviewed v2 source/code to the personal GitHub fork and update the final commit identifier.
-- Run the notebook from a clean Colab session.
-- Publish the matching v2 game to the Hugging Face Space.
 - Generate and inspect the v2 PDF in Overleaf separately.
 - Obtain reviewer follow-up if it is supplied, then complete Canvas submission.
 
@@ -31,6 +28,8 @@ This is a preparation checklist, not an instructor score and not part of the two
 - 750 seed-level runs complete: five conditions x five exploration rates x 30 seeds.
 - Preserved v1 code reproduces all seven original metrics for 120 runs.
 - Local game passes 20 agent/player configuration checks without NaN or undefined outputs.
+- GitHub snapshot 2fc74e1 contains the reviewed source, code, notebook, original reviews, outputs, and preserved v1.
+- Hugging Face commit 691e720 publishes the matching five-level, market-linked game; hosted and local HTML hashes match.
 - V1 ZIP/PDF are byte-preserved; v2 PDF is deliberately not generated in this session.
 
 ## Process requirements
