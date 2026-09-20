@@ -1,0 +1,4 @@
+Yichen Shen:
+Strength: clearly distinguishes honesty from cooperation, supported by simulations
+Prioritized revision: clarify how planned partner selection mechanism changes incentives. If defection remains the dominant action, under what conditions would accurate reports change an agent’s decision.
+Suggestion: add a controlled comparison with/without partner selection

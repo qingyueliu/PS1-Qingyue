@@ -1,46 +1,53 @@
 \section{Three connected research questions}
-Minimal third-party observation can help learning agents find cooperative partners~\cite{leung2026}, but a strategic observer may send false, incomplete, or unverifiable reports. In my application, C observes B's previous action, reports it to A, and A decides whether to use the report before playing B. Marketplaces, AI-agent platforms, and public allocation systems face the same tension. Figure~\ref{fig:teaser} connects three questions:
+Leung et al.~\cite{leung2026} study RL agents using minimal third-party observation and partner selection to support cooperation. I use their work as the baseline without reproducing its population or interaction-network model. Holding A--B matching, payoffs, and learning settings fixed, I change only C's reporting incentive: a bonus after A cooperates. This controlled incentive extension asks whether C's private reward improves report usefulness, cooperation, and A+B welfare; partner selection remains future work. C observes B, reports to A, and A chooses whether to use the report before playing B. Figure~\ref{fig:teaser} links three perspectives:
 
-\textbf{Q1---Economics:} Which rewards, lying costs, or verification rules make C's report credible and welfare improving?\par
-\textbf{Q2---Computation:} Can Q-learners identify useful reports and sustain cooperation across information conditions?\par
-\textbf{Q3---Behavior:} Does report use reflect calibrated trust, or ambiguity and short-run optimism?
+\textbf{Q1---Economics:} Does rewarding C for A's subsequent cooperation align C's benefit with A+B welfare?\par
+\textbf{Q2---Computation:} How do reporting incentives affect honesty, report use, and cooperation across learning settings?\par
+\textbf{Q3---Behavior:} Does report use indicate useful information, or merely payoff learning?
 
-Together they ask when institutions can turn third-party information into calibrated trust without creating a new channel for manipulation.
+The direction remains strategic third-party information in a repeated Prisoner's Dilemma; v2 isolates one observer incentive.
 
 \section{Answer to Q1: incentives and intellectual lineage}
-After round 1, C observes B's action $s\in\{C,D\}$ in a preceding C--B exposure stage and sends $m\in\{C,D\}$; A uses or ignores $m$, then A and B simultaneously cooperate or defect. A/B payoffs are $(3,3),(0,4),(4,0),(1,1)$; C gets $h=0.4$ for truth and pays $\ell=0.2$ for lying. Truth strictly benefits C, but defection improves A's or B's payoff by one against either opposing action. A Bayesian-Nash benchmark~\cite{harsanyi1968} can therefore combine truthful reporting with mutual defection. This matches strategic-communication theory: informativeness depends on aligned incentives, not message availability alone~\cite{crawford1982}.
+After round 1, C observes B's action $s$ in a C--B exposure stage, sends $m$, and A uses or ignores it before A--B play. A/B payoffs remain $(3,3),(0,4),(4,0),(1,1)$. Following \emph{Zhengjun He's} suggestion, C's reporting reward is
+\[
+r_C=0.4\mathbf{1}(m=s)-0.2\mathbf{1}(m\ne s)
+     +\beta\mathbf{1}(a_A=C),
+\]
+with $\beta=0$ in the strategic baseline and $\beta=1$ in the added condition. The external bonus does not change A/B payoffs; A+B welfare excludes it.
 
-\textbf{Hypothesis.} Increasing $\ell$ raises honesty but not cooperation. Verification helps only if information changes a consequential margin such as partner selection, future access, or sanctions. The welfare benchmark is A+B payoff, separating credible reporting from socially useful reporting.
+Addressing \emph{Yichen Shen}, if $p$ is B's cooperation probability, A's expected stage payoffs are $3p$ for C and $1+3p$ for D. Better information changes $p$, not this one-point gap. This is a stage-game result, not an impossibility theorem for repeated cooperation. Harsanyi's incomplete-information framework~\cite{harsanyi1968} and strategic communication~\cite{crawford1982} motivate separating reporting incentives from receiver benefits. Pairing stays fixed; partner selection is deferred.
 
 \section{Answer to Q2: method and evaluation}
-The browser baseline uses tabular Q-learning~\cite{watkins1992}: $\epsilon=0.12$, action $\alpha=0.12$, $\gamma=0.85$, with reporter $\alpha_C=0.15$, $\gamma_C=0.80$. Recorded unseeded simulations produced 85.0\%, 3.8\%, and 0.7\% mutual cooperation over 100, 10,000, and 100,000 rounds; honesty stayed near 94\%, while welfare fell from 5.68 to 2.46 and 2.27.
+Tabular Q-learning~\cite{watkins1992} retains v1 parameters. The new comparison changes only C's bonus, credited after A acts. Thirty seeds, 10,000 rounds, and five exploration rates test sensitivity (Appendix A).
 
-Across 30 fixed seeds and 10,000 rounds, cooperation is 3.29\% without reports and below 3\% in every reporting treatment; strategic honesty is 93.98\%. Exact means and dispersion appear in Appendix A. With truth dominant, $\epsilon$-exploration explains residual lies. Outputs are synthetic; next I add partner choice.
+At $\epsilon=.12$, strategic versus bonus-linked reporting gives 93.98\% versus 93.46\% honesty and 2.75\% versus 2.66\% mutual cooperation. C's reporting reward rises from .364 to .458, while the cooperation difference is $-0.082$ percentage points (approximate 95\% interval $[-.652,.489]$). There is no clear cooperation improvement. At $\epsilon=.02$, strategic cooperation averages 21.99\%; conclusions depend on exploration and horizon. All findings are synthetic.
 
 \clearpage\balance
 \section{Answer to Q3: behavior and competing explanations}
-Calibrated trust predicts that A uses reports that forecast realized behavior, consistent with evidence that gossip changes cooperation~\cite{sommerfeld2007}. A competing payoff-learning account predicts defection regardless of accuracy because defection dominates. If verification raises report use but not cooperation, while partner selection raises both, payoff learning is better supported. If accurate reports alone raise cooperation, trust has an independent role. Q-values are behavioral indicators, not felt trust, guilt, or belief. I would revise my claim if cooperation remained high in long seeded runs without consequences for reported information.
+Gossip can affect cooperation~\cite{sommerfeld2007}, but using a report need not mean cooperating or feeling trust. C reports a past action: honesty differs from predicting B's later action. Under the default strategic condition these rates are 93.98\% and 83.73\%. The verified benchmark forces both truthful reporting and report use, so it does not isolate credibility alone.
+
+Zhengjun's proposed payoff link tests whether C benefits when A cooperates; Yichen's question tests why A should respond. The observed rise in C's reward without a clear A+B welfare gain separates private benefit from social usefulness. Q-values measure learned action values, not human beliefs. No human behavioral effect is established.
 
 \section{Advanced development and future directions}
-Nash, Harsanyi, and Selten received the 1994 economics prize for equilibrium analysis~\cite{nobel1994}; Harsanyi clarifies choice under unknown reliability. Sutton and Barto received the 2024 Turing Award for reinforcement learning~\cite{turing2024}. Today's boundary is that autonomous agents learn from other strategic agents' reports at machine speed. Integrating equilibrium incentives, learning dynamics, and behavioral trust explains why transparent information can remain ineffective.
+The 1994 economics prize recognized Nash, Harsanyi, and Selten's equilibrium analysis~\cite{nobel1994}; Sutton and Barto received the 2024 Turing Award for reinforcement learning~\cite{turing2024}. Today's distinctive problem is agents learning from other strategic agents' reports. The next test varies bonus strength and run length under fixed matching; partner selection remains a separate future extension.
 
-\begin{table}[h]\caption{Roadmap from laureate foundations to contribution.}
+\begin{table}[h]\caption{Roadmap from foundations to contribution.}
 \begin{tabularx}{\columnwidth}{@{}p{1.35cm}Y@{}}\toprule
 \textbf{Horizon}&\textbf{Milestone and evidence}\\\midrule
-Foundation&Equilibrium analysis and reinforcement learning.\\
-PS1&Three-agent model, demo, seeded condition check.\\
-Next&Add verification with partner selection.\\
-Longer term&Validate with heterogeneous agents and people.\\
+Foundation&Equilibrium and reinforcement learning.\\
+PS1 v2&Observer incentive comparison; 750 seeded runs.\\
+Next&Bonus strength and longer learning horizons.\\
+Longer term&Heterogeneous agents and human evaluation.\\
 2056&Auditable allocation using calibrated information.\\\bottomrule
 \end{tabularx}\end{table}
 
 \noindent\textbf{Expected 2056 Nobel Prize and Turing Award contribution statement.}
-By 2056, I aspire to develop auditable resource-allocation institutions that sustain cooperation when people, governments, and AI agents rely on strategic third-party information. Building on equilibrium analysis and reinforcement learning, I will integrate incentive design, reproducible multi-agent evaluation, and behavioral evidence to separate honesty, accuracy, verifiability, and social usefulness.
+By 2056, I aspire to develop auditable allocation institutions for people, governments, and AI agents relying on strategic third-party information. Building on equilibrium analysis and reinforcement learning, I will combine incentive design, reproducible evaluation, and behavioral evidence to distinguish honesty, accuracy, verifiability, and social usefulness.
 
 \subsection*{Open Science Statement}
 \textbf{GitHub:} \GitHubLink\quad \textbf{Colab:} \ColabLink\par
-The repository releases the LaTeX source, editable figure, standard-library model, notebook, saved synthetic outputs, tests, and browser game. Run \texttt{python companion/src/strategic\_reporting.py}. Submitted commit: \textbf{5c87056}. Student code uses the MIT License; other materials retain their terms.
+Source, notebook, seed-level results, tests, game, v1, reviews, and author response are retained. Final code commit: \FinalCodeCommit. Run \texttt{python scripts/run\_revision\_checks.py}. Student code is MIT licensed; other materials retain their terms. See Appendix D for completed checks and artifact status.
 
 \subsection*{Statement of Contribution to the UN's SDGs}
 \textbf{Hugging Face:} \DemoLink\par
-The open-access game supports \textbf{SDG 4---Quality Education}~\cite{sdg4}: students vary information and incentives, compare outcomes, or play as A to learn why honesty and cooperation differ. A pre/post explanation question can measure the intended learning outcome; improvement has not yet been evaluated.
+The game supports \textbf{SDG 4---Quality Education}~\cite{sdg4}: compare information incentives or play as A across five explained exploration levels. Pre/post explanations could assess learning; educational improvement has not been measured.

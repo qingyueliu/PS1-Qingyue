@@ -26,11 +26,11 @@
 <body>
 <main>
   <h1>Strategic Reports and Cooperation</h1>
-  <p class="subtitle">A repeated Prisoner's Dilemma with intrinsic rewards for honesty and intrinsic guilt from lying.</p>
+  <p class="subtitle">How do uncertain third-party reports affect cooperation? Compare honesty incentives with a reward for A's later cooperation.</p>
 
   <section class="card">
     <h2>Shared assumptions</h2>
-    <p class="note">Except in the first round, C was B's opponent in the immediately preceding interaction and therefore knows B's actual choice. No institution verifies C's report.</p>
+    <p class="note">Except in round 1, C observes B in a preceding C–B interaction. C reports that past action before A and B play. Pairing stays fixed. An honest report about the past is not a guarantee of B's next action.</p>
     <div class="settings">
       <label>Intrinsic reward for honest reporting
         <input id="honestyReward" type="number" min="0" max="5" step="0.1" value="0.4">
@@ -38,8 +38,12 @@
       <label>Intrinsic guilt cost of lying
         <input id="lyingCost" type="number" min="0" max="5" step="0.1" value="0.2">
       </label>
+      <label>C's bonus when A cooperates (market-linked condition only)
+        <input id="cooperationBonus" type="number" min="0" max="5" step="0.1" value="1">
+      </label>
     </div>
     <p class="note">Payoffs: mutual cooperation = 3/3; unilateral defection = 4/0; mutual defection = 1/1.</p>
+    <p class="note">C's reporting reward = honesty reward or minus lying cost, plus the bonus if A then cooperates in the market-linked condition. This external bonus does not reduce A's payoff. Social welfare below measures A+B only. A's cooperation can help or expose A to exploitation; rewarding it does not guarantee mutual benefit.</p>
   </section>
 
   <section class="card">
@@ -50,31 +54,54 @@
         <select id="autoCondition">
           <option value="none">No third-party reports</option>
           <option value="reports" selected>Strategic third-party reports</option>
+          <option value="market_linked">Market-linked reports: C rewarded when A cooperates</option>
+          <option value="verified">Verified truth + forced report use</option>
         </select>
       </label>
       <label>Number of rounds
         <input id="autoRounds" type="number" min="10" max="100000" step="10" value="3000">
       </label>
+      <label>Agent exploration level
+        <select id="autoRandomness">
+          <option value="0.02">Very low (2%)</option>
+          <option value="0.05">Low (5%)</option>
+          <option value="0.12" selected>Medium (12%)</option>
+          <option value="0.25">High (25%)</option>
+          <option value="0.40">Very high (40%)</option>
+        </select>
+      </label>
     </div>
     <div class="row"><button class="primary" id="runAgents">Run agent experiment</button></div>
     <div id="autoResults" class="hidden"></div>
+    <p class="note">The five levels mean 2%, 5%, 12%, 25%, or 40% probability of exploring a random action at each decision; otherwise an agent chooses its current best learned action. They measure exploration, not intelligence or training progress. Browser runs are unseeded educational demonstrations; the repository notebook provides the 30-seed research comparison.</p>
   </section>
 
   <section class="card">
     <h2>Part 2 · Play as Agent A</h2>
     <p class="note">Before each decision after round 1, C reports B's actual choice from their immediately preceding interaction. C can report truthfully or lie.</p>
     <div class="settings">
+      <label>Player information condition
+        <select id="humanCondition">
+          <option value="reports" selected>Strategic third-party reports</option>
+          <option value="market_linked">Market-linked reports: C rewarded when you cooperate</option>
+          <option value="verified">Verified truthful reports</option>
+          <option value="none">No third-party reports</option>
+        </select>
+      </label>
       <label>Number of player rounds
         <input id="humanRounds" type="number" min="2" max="100" value="10">
       </label>
       <label>Learning randomness
         <select id="humanRandomness">
-          <option value="0.05">Low</option>
-          <option value="0.12" selected>Medium</option>
-          <option value="0.25">High</option>
+          <option value="0.02">Very low (2%)</option>
+          <option value="0.05">Low (5%)</option>
+          <option value="0.12" selected>Medium (12%)</option>
+          <option value="0.25">High (25%)</option>
+          <option value="0.40">Very high (40%)</option>
         </select>
       </label>
     </div>
+    <p class="note">Learning randomness is the probability that an agent explores a random action instead of choosing its current best learned action: Very low = 2%, Low = 5%, Medium = 12%, High = 25%, and Very high = 40%. A higher level means more exploration and less predictable play.</p>
     <div class="row"><button class="primary" id="startHuman">Start / restart player game</button></div>
 
     <div id="humanGame" class="hidden" style="margin-top:16px">
@@ -130,21 +157,29 @@ function updateQ(q,index,reward,alpha,gamma){
 function actionFrom(index){return index===0?"C":"D";}
 function word(action){return action==="C"?"cooperated":"defected";}
 
-function intrinsicReport(qReport,actual,epsilon){
+function intrinsicReport(qReport,actual,epsilon,settings){
   var decision=chooseQ(qReport,epsilon);
   var truthful=decision===0;
   var claim=truthful?actual:(actual==="C"?"D":"C");
-  var reward=truthful?num("honestyReward",0.4):-num("lyingCost",0.2);
-  updateQ(qReport,decision,reward,0.15,0.80);
-  return{truthful:truthful,claim:claim};
+  var reward=truthful?settings.honesty:-settings.cost;
+  return{truthful:truthful,claim:claim,decision:decision,intrinsic:reward};
+}
+function settings(){
+  return{honesty:Math.max(0,Math.min(5,num("honestyReward",0.4))),cost:Math.max(0,Math.min(5,num("lyingCost",0.2))),bonus:Math.max(0,Math.min(5,num("cooperationBonus",1)))};
+}
+function settleReport(qReport,report,aAction,condition,config){
+  if(!report)return 0;
+  var reward=report.intrinsic+(condition==="market_linked"&&aAction==="C"?config.bonus:0);
+  if(condition!=="verified")updateQ(qReport,report.decision,reward,0.15,0.80);
+  return reward;
 }
 
 function runAuto(){
   var rounds=Math.max(10,Math.min(100000,Math.floor(num("autoRounds",3000))));
-  var hasReports=$("autoCondition").value==="reports";
-  var epsilon=0.12,alpha=0.12,gamma=0.85;
+  var condition=$("autoCondition").value,hasReports=condition!=="none",config=settings();
+  var epsilon=num("autoRandomness",0.12),alpha=0.12,gamma=0.85;
   var qAAction=[[0,0],[0,0],[0,0]],qATrust=[0,0],qB=[0,0],qCAction=[0,0],qReport=[0,0];
-  var mutual=0,honest=0,reports=0,trusted=0,exploit=0,welfare=0,scoreA=0,scoreB=0;
+  var mutual=0,honest=0,reports=0,trusted=0,exploit=0,welfare=0,scoreA=0,scoreB=0,reporterScore=0,aCoop=0;
 
   for(var t=0;t<rounds;t++){
     var report=null;
@@ -157,13 +192,13 @@ function runAuto(){
       updateQ(qCAction,cPriorIndex,priorPay[0],alpha,gamma);
       updateQ(qB,bPriorIndex,priorPay[1],alpha,gamma);
       if(hasReports){
-        report=intrinsicReport(qReport,bPrior,epsilon);
+        report=condition==="verified"?{truthful:true,claim:bPrior,intrinsic:config.honesty}:intrinsicReport(qReport,bPrior,epsilon,config);
         reports++;
         if(report.truthful)honest++;
       }
     }
 
-    var trustIndex=report?chooseQ(qATrust,epsilon):0;
+    var trustIndex=report?(condition==="verified"?1:chooseQ(qATrust,epsilon)):0;
     var usesReport=!!report&&trustIndex===1;
     if(usesReport)trusted++;
     var signal=usesReport?(report.claim==="C"?1:2):0;
@@ -173,8 +208,10 @@ function runAuto(){
     var gains=payoff(aAction,bAction);
 
     updateQ(qAAction[signal],aIndex,gains[0],alpha,gamma);
-    if(report)updateQ(qATrust,trustIndex,gains[0],alpha,gamma);
+    if(report&&condition!=="verified")updateQ(qATrust,trustIndex,gains[0],alpha,gamma);
     updateQ(qB,bIndex,gains[1],alpha,gamma);
+    reporterScore+=settleReport(qReport,report,aAction,condition,config);
+    if(aAction==="C")aCoop++;
 
     scoreA+=gains[0];scoreB+=gains[1];welfare+=gains[0]+gains[1];
     if(aAction==="C"&&bAction==="C")mutual++;
@@ -188,6 +225,8 @@ function runAuto(){
     "<table><tbody>"+
     "<tr><td>Rounds</td><td>"+rounds+"</td></tr>"+
     "<tr><td>Mutual cooperation</td><td>"+pct(mutual,rounds)+"</td></tr>"+
+    "<tr><td>A's cooperation</td><td>"+pct(aCoop,rounds)+"</td></tr>"+
+    "<tr><td>C's average reporting reward</td><td>"+(reports?(reporterScore/reports).toFixed(3):"Not applicable")+"</td></tr>"+
     reportCells+
     "<tr><td>Exploitative outcomes</td><td>"+pct(exploit,rounds)+"</td></tr>"+
     "<tr><td>Average social welfare per round</td><td>"+(welfare/rounds).toFixed(2)+"</td></tr>"+
@@ -201,6 +240,7 @@ function startHuman(){
     round:1,
     limit:Math.max(2,Math.min(100,Math.floor(num("humanRounds",10)))),
     epsilon:num("humanRandomness",0.12),
+    condition:$("humanCondition").value,config:settings(),reporterScore:0,
     qB:[0,0],qCAction:[0,0],qReport:[0,0],
     report:null,scoreA:0,scoreB:0,mutual:0,honest:0,reports:0,
     exploit:0,welfare:0,history:[]
@@ -230,7 +270,11 @@ function prepareHumanRound(){
   updateQ(human.qCAction,cIndex,gains[0],0.15,0.80);
   updateQ(human.qB,bIndex,gains[1],0.15,0.80);
 
-  human.report=intrinsicReport(human.qReport,bObserved,human.epsilon);
+  if(human.condition==="none"){
+    $("humanReport").textContent="No third-party report is provided in this condition.";
+    return;
+  }
+  human.report=human.condition==="verified"?{truthful:true,claim:bObserved,intrinsic:human.config.honesty}:intrinsicReport(human.qReport,bObserved,human.epsilon,human.config);
   human.reports++;
   if(human.report.truthful)human.honest++;
   $("humanReport").textContent="C reports that B "+word(human.report.claim)+" in B's immediately preceding interaction.";
@@ -242,6 +286,7 @@ function humanPlay(aAction){
   var bAction=actionFrom(bIndex);
   var gains=payoff(aAction,bAction);
   updateQ(human.qB,bIndex,gains[1],0.15,0.80);
+  human.reporterScore+=settleReport(human.qReport,human.report,aAction,human.condition,human.config);
 
   human.scoreA+=gains[0];human.scoreB+=gains[1];human.welfare+=gains[0]+gains[1];
   if(aAction==="C"&&bAction==="C")human.mutual++;
@@ -276,6 +321,7 @@ function finishHuman(){
   $("humanFinal").innerHTML=
     "<table><tbody>"+
     "<tr><td>C's report honesty</td><td>"+pct(human.honest,human.reports)+"</td></tr>"+
+    "<tr><td>C's average reporting reward</td><td>"+(human.reports?(human.reporterScore/human.reports).toFixed(3):"Not applicable")+"</td></tr>"+
     "<tr><td>Exploitative outcomes</td><td>"+pct(human.exploit,human.limit)+"</td></tr>"+
     "<tr><td>Average social welfare</td><td>"+(human.welfare/human.limit).toFixed(2)+"</td></tr>"+
     "</tbody></table>";

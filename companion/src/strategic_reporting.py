@@ -25,7 +25,24 @@ class Config:
     report_gamma: float = 0.80
     honesty_reward: float = 0.40
     lying_cost: float = 0.20
-    condition: str = "strategic"  # none, strategic, verified, high_lie_cost
+    cooperation_bonus: float = 1.0
+    condition: str = "strategic"  # none, strategic, verified, market_linked, high_lie_cost
+
+
+LEVELS = (0.02, 0.05, 0.12, 0.25, 0.40)
+CONDITIONS = ("none", "strategic", "verified", "market_linked", "high_lie_cost")
+
+
+def reporting_reward(config: Config, truthful: bool, a_action: int) -> float:
+    """Zhengjun He's suggested link: reward C after observing A's action.
+
+    This external bonus is not deducted from A and is not part of A+B welfare.
+    C's exposure-stage payoff trains its separate action table, as in v1.
+    """
+    cost = 1.0 if config.condition == "high_lie_cost" else config.lying_cost
+    intrinsic = config.honesty_reward if truthful else -cost
+    bonus = config.cooperation_bonus if config.condition == "market_linked" and a_action == COOPERATE else 0.0
+    return intrinsic + bonus
 
 
 def payoff(a: int, b: int) -> tuple[int, int]:
@@ -50,8 +67,10 @@ def update_q(q: list[float], index: int, reward: float, alpha: float, gamma: flo
 
 
 def run_once(config: Config, seed: int) -> dict[str, float]:
-    if config.condition not in {"none", "strategic", "verified", "high_lie_cost"}:
+    if config.condition not in CONDITIONS:
         raise ValueError(f"unknown condition: {config.condition}")
+    if config.rounds < 1 or not 0 <= config.epsilon <= 1:
+        raise ValueError("rounds must be positive and epsilon must be in [0, 1]")
     rng = random.Random(seed)
     q_a_action = [[0.0, 0.0] for _ in range(3)]  # no signal, reported C, reported D
     q_a_trust = [0.0, 0.0]
@@ -59,8 +78,10 @@ def run_once(config: Config, seed: int) -> dict[str, float]:
     q_c_action = [0.0, 0.0]
     q_report = [0.0, 0.0]  # truth, lie
     mutual = honest = reports = trusted = exploit = welfare = score_a = score_b = 0
+    a_coop = accurate = late_mutual = 0
+    reporter_score = bonus_score = 0.0
+    late_start = config.rounds * 4 // 5
 
-    lying_cost = 1.0 if config.condition == "high_lie_cost" else config.lying_cost
     has_reports = config.condition != "none"
 
     for t in range(config.rounds):
@@ -81,14 +102,6 @@ def run_once(config: Config, seed: int) -> dict[str, float]:
                     report_i = choose_q(q_report, config.epsilon, rng)
                     truthful = report_i == 0
                     claim = b_prior_i if truthful else 1 - b_prior_i
-                    report_reward = config.honesty_reward if truthful else -lying_cost
-                    update_q(
-                        q_report,
-                        report_i,
-                        report_reward,
-                        config.report_alpha,
-                        config.report_gamma,
-                    )
                 honest += int(truthful)
                 report = claim
 
@@ -112,10 +125,21 @@ def run_once(config: Config, seed: int) -> dict[str, float]:
             update_q(q_a_trust, trust_i, gain_a, config.alpha, config.gamma)
         update_q(q_b, b_i, gain_b, config.alpha, config.gamma)
 
+        if report is not None:
+            accurate += int(report == b_i)
+            reward = reporting_reward(config, truthful, a_i)
+            reporter_score += reward
+            bonus_score += config.cooperation_bonus if config.condition == "market_linked" and a_i == COOPERATE else 0.0
+            if config.condition != "verified":
+                # Defer the update until A acts; beta=0 preserves the v1 trajectory.
+                update_q(q_report, report_i, reward, config.report_alpha, config.report_gamma)
+
         score_a += gain_a
         score_b += gain_b
         welfare += gain_a + gain_b
         mutual += int(a_i == COOPERATE and b_i == COOPERATE)
+        a_coop += int(a_i == COOPERATE)
+        late_mutual += int(t >= late_start and a_i == COOPERATE and b_i == COOPERATE)
         exploit += int(a_i != b_i)
 
     return {
@@ -126,13 +150,18 @@ def run_once(config: Config, seed: int) -> dict[str, float]:
         "welfare": welfare / config.rounds,
         "payoff_a": score_a / config.rounds,
         "payoff_b": score_b / config.rounds,
+        "a_cooperation_pct": 100 * a_coop / config.rounds,
+        "prediction_accuracy_pct": 100 * accurate / reports if reports else float("nan"),
+        "reporter_reward": reporter_score / reports if reports else float("nan"),
+        "bonus_per_report": bonus_score / reports if reports else float("nan"),
+        "late_cooperation_pct": 100 * late_mutual / (config.rounds - late_start),
     }
 
 
-def run_panel(rounds: int = 10_000, seeds: range = range(30)) -> list[dict[str, float | str]]:
+def run_panel(rounds: int = 10_000, seeds: range = range(30), epsilon: float = 0.12) -> list[dict[str, float | str]]:
     rows: list[dict[str, float | str]] = []
-    for condition in ("none", "strategic", "verified", "high_lie_cost"):
-        results = [run_once(Config(rounds=rounds, condition=condition), seed) for seed in seeds]
+    for condition in CONDITIONS:
+        results = [run_once(Config(rounds=rounds, condition=condition, epsilon=epsilon), seed) for seed in seeds]
         row: dict[str, float | str] = {"condition": condition}
         for metric in ("cooperation_pct", "honesty_pct", "reports_used_pct", "exploit_pct", "welfare"):
             values = [float(result[metric]) for result in results]

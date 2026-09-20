@@ -1,79 +1,47 @@
-"""Build the self-contained Colab notebook with saved deterministic output."""
+"""Build a portable v2 notebook with standard-library JSON tooling.
 
+The model itself has no third-party dependency. If nbformat/nbclient are
+available, this script can be extended to execute cells; this fallback writes
+a valid notebook and embeds the already rerun seed-level output.
+"""
 from __future__ import annotations
-
 import json
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[1]
-module_source = (ROOT / "companion/src/strategic_reporting.py").read_text(encoding="utf-8")
-module_source = module_source.split('\nif __name__ == "__main__":', 1)[0]
-
-saved_output = (
-    "condition          coop%   honest%   used%   exploit%   welfare\n"
-    "none                 3.29   n/a   n/a  12.60   2.38\n"
-    "strategic            2.75  93.98  43.60  13.30   2.38\n"
-    "verified             2.39 100.00 100.00  13.14   2.36\n"
-    "high_lie_cost        2.75  93.98  43.60  13.30   2.38\n"
-)
-
-notebook = {
-    "nbformat": 4,
-    "nbformat_minor": 5,
-    "metadata": {
-        "colab": {"name": "strategic_reporting_qlearning.ipynb", "provenance": []},
-        "kernelspec": {"display_name": "Python 3", "language": "python", "name": "python3"},
-        "language_info": {"name": "python", "version": "3"},
-    },
-    "cells": [
-        {
-            "cell_type": "markdown",
-            "metadata": {},
-            "source": [
-                "# Strategic third-party reports in a repeated Prisoner's Dilemma\n",
-                "\n",
-                "**Research question.** When do third-party reports become useful for cooperation rather than merely honest?\n",
-                "\n",
-                "This self-contained CPU notebook reconstructs the Week 2 browser game's tabular Q-learning rules. It compares no reports, strategic reports, verified reports, and a higher lying cost across 30 fixed seeds. All outputs are synthetic model results; they do not establish human or deployed-AI behavior.\n",
-            ],
-        },
-        {
-            "cell_type": "markdown",
-            "metadata": {},
-            "source": [
-                "## Prediction and computational check\n",
-                "\n",
-                "With payoffs (3,3), (0,4), (4,0), and (1,1), defection improves a player's stage payoff by one against either opposing action. Increasing C's lying cost should therefore raise or preserve honesty but should not by itself overturn A and B's incentive to defect. Verification is expected to change report use more than cooperation unless information affects partner choice, sanctions, or continuation.\n",
-            ],
-        },
-        {
-            "cell_type": "code",
-            "execution_count": 1,
-            "metadata": {},
-            "outputs": [],
-            "source": [line + "\n" for line in module_source.splitlines()],
-        },
-        {
-            "cell_type": "code",
-            "execution_count": 2,
-            "metadata": {},
-            "outputs": [{"name": "stdout", "output_type": "stream", "text": [saved_output]}],
-            "source": ["rows = run_panel(rounds=10_000, seeds=range(30))\n", "print(format_panel(rows))\n"],
-        },
-        {
-            "cell_type": "markdown",
-            "metadata": {},
-            "source": [
-                "## Interpretation and next test\n",
-                "\n",
-                "Strategic reporting is about 94% honest, yet cooperation remains low. Making reports perfectly verified increases report use to 100% without increasing cooperation. Raising the lying cost from 0.2 to 1.0 leaves the mean unchanged because truth already dominates and the residual lies come from fixed exploration. The next study should add partner selection or an institutional consequence for verified information and rerun the same seeded panel.\n",
-            ],
-        },
-    ],
-}
-
-out = ROOT / "companion/notebooks/strategic_reporting_qlearning.ipynb"
-out.parent.mkdir(parents=True, exist_ok=True)
-out.write_text(json.dumps(notebook, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
-print(out)
+source = (ROOT / "companion/src/strategic_reporting.py").read_text(encoding="utf-8")
+results = (ROOT / "companion/outputs/revision_results.md").read_text(encoding="utf-8")
+cells = [
+ {"cell_type":"markdown","metadata":{},"source":[
+  "# Strategic reports and cooperation — PS1 v2\n",
+  "\n",
+  "This notebook studies how uncertain third-party reports affect cooperation when C receives a bonus after A cooperates. The v2 revision adopts Zhengjun He's downstream payoff suggestion and addresses Yichen Shen's stage-incentive question while keeping fixed matching.\n",
+  "\n",
+  "The model uses synthetic Q-learning runs. Exploration rates 2%, 5%, 12%, 25%, and 40% are settings for random action choice, not AI ability levels.\n"]},
+ {"cell_type":"markdown","metadata":{},"source":[
+  "## Methods and limitations\n",
+  "\n",
+  "A/B payoffs are 3/3, 0/4, 4/0, and 1/1. The market-linked condition adds beta=1 to C's reporting reward after A cooperates; A+B welfare excludes this external bonus. The verified condition forces truth and report use. The high-lying-cost condition is retained from v1. Each condition uses seeds 0–29 and 10,000 rounds at each exploration rate.\n",
+  "\n",
+  "Defection has a one-point stage-payoff advantage for every belief about B; that statement does not prove that richer repeated-game strategies cannot sustain cooperation. C reports a past action, so honesty and prediction of B's next action are separate measures.\n"]},
+ {"cell_type":"code","execution_count":1,"metadata":{},"outputs":[],"source":[
+  "# The complete standard-library implementation is embedded for Colab portability.\n",
+  *source.splitlines(True)]},
+ {"cell_type":"markdown","metadata":{},"source":[
+  "## Rerun record\n",
+  "\n",
+  "The following output was generated by scripts/run_revision_checks.py and retained as strict JSON in companion/outputs/ps1_revision_panel.json. It includes all 750 seed-level runs rather than selected examples.\n"]},
+ {"cell_type":"code","execution_count":2,"metadata":{},"outputs":[
+  {"output_type":"stream","name":"stdout","text":[results]}],
+  "source":["# Display the saved, fully rerun panel\n","print(open('companion/outputs/revision_results.md').read())\n"]},
+ {"cell_type":"markdown","metadata":{},"source":[
+  "## Interpretation\n",
+  "\n",
+  "At epsilon=0.12, C's cooperation bonus increases C's reporting reward but does not clearly increase mutual cooperation or A+B welfare. At epsilon=0.02, early cooperation is much higher than final-window cooperation, so learning setting and horizon qualify the conclusion. Partner selection remains future work because it changes the action space.\n",
+  "\n",
+  "The saved JSON contains paired seed contrasts and approximate intervals. The v2 PDF was not generated in this workflow.\n"]},
+]
+notebook={"cells":cells,"metadata":{"kernelspec":{"display_name":"Python 3","language":"python","name":"python3"},"language_info":{"name":"python","version":"3"}},"nbformat":4,"nbformat_minor":5}
+out=ROOT/"companion/notebooks/strategic_reporting_qlearning.ipynb"
+out.write_text(json.dumps(notebook,ensure_ascii=False,indent=1)+"\n",encoding="utf-8")
+print(f"Wrote valid notebook JSON: {out}")

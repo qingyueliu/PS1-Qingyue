@@ -1,12 +1,15 @@
 ---
 title: Strategic Reports and Cooperation
-emoji: "🔎"
+emoji: 🔎
 colorFrom: blue
-colorTo: green
+colorTo: yellow
 sdk: static
 pinned: false
+license: mit
 ---
 
-# Strategic Reports and Cooperation
+PS1 v2 game by Qingyue Liu. Fixed-pair Prisoner's Dilemma with uncertain reports; compare strategic, cooperation-bonus, verified, and no-report conditions. Five explained exploration levels remain available.
 
-A static educational demonstration of a repeated Prisoner's Dilemma with potentially false third-party reports. The app has no backend, API key, database, paid service, or hosted CPU/GPU runtime. It reports synthetic learning outcomes and includes a mode in which the visitor plays as Agent A.
+Yichen Shen contributed the incentive-clarification question; Zhengjun He suggested linking C's reporting payoff to A's later cooperation. Implementation and testing were AI-assisted and are disclosed in the paper.
+
+Research source and original reviews: https://github.com/qingyueliu/PS1-Qingyue

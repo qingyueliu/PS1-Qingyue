@@ -1,1 +1,6 @@
-# No third-party Python packages are required.
+# The model and command-line experiments use only the Python standard library.
+# Notebook execution and its sensitivity chart:
+matplotlib>=3.8,<4
+nbformat>=5.10,<6
+nbclient>=0.10,<1
+ipykernel>=6,<8
